@@ -5,49 +5,49 @@ namespace CommandUndoRedo
 {
 	public class UndoRedo
 	{
-		public int maxUndoStored {get {return undoCommands.maxLength;} set {SetMaxLength(value);}}
+		public int MaxUndoStored {get {return _undoCommands.MaxLength;} set {SetMaxLength(value);}}
 
-		DropoutStack<ICommand> undoCommands = new DropoutStack<ICommand>();
-		DropoutStack<ICommand> redoCommands = new DropoutStack<ICommand>();
+		DropoutStack<ICommand> _undoCommands = new DropoutStack<ICommand>();
+		DropoutStack<ICommand> _redoCommands = new DropoutStack<ICommand>();
 
 		public UndoRedo() {}
 		public UndoRedo(int maxUndoStored)
 		{
-			this.maxUndoStored = maxUndoStored;
+			this.MaxUndoStored = maxUndoStored;
 		}
 
 		public void Clear()
 		{
-			undoCommands.Clear();
-			redoCommands.Clear();
+			_undoCommands.Clear();
+			_redoCommands.Clear();
 		}
 
 		public void Undo()
 		{
-			if(undoCommands.Count > 0)
+			if(_undoCommands.Count > 0)
 			{
-				ICommand command = undoCommands.Pop();
+				ICommand command = _undoCommands.Pop();
 				command.UnExecute();
-				redoCommands.Push(command);
+				_redoCommands.Push(command);
 			}
 		}
 
 		public void Redo()
 		{
-			if(redoCommands.Count > 0)
+			if(_redoCommands.Count > 0)
 			{
-				ICommand command = redoCommands.Pop();
+				ICommand command = _redoCommands.Pop();
 				command.Execute();
-				undoCommands.Push(command);
+				_undoCommands.Push(command);
 			}
 		}
 
 		public void Insert(ICommand command)
 		{
-			if(maxUndoStored <= 0) return;
+			if(MaxUndoStored <= 0) return;
 
-			undoCommands.Push(command);
-			redoCommands.Clear();
+			_undoCommands.Push(command);
+			_redoCommands.Clear();
 		}
 
 		public void Execute(ICommand command)
@@ -58,8 +58,8 @@ namespace CommandUndoRedo
 
 		void SetMaxLength(int max)
 		{
-			undoCommands.maxLength = max;
-			redoCommands.maxLength = max;
+			_undoCommands.MaxLength = max;
+			_redoCommands.MaxLength = max;
 		}
 	}
 }

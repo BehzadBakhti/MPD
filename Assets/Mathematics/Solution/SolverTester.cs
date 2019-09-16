@@ -37,7 +37,7 @@ namespace Analytics.Tests
             return opt;
         }
 
-        private static void PrintNLResult(SolutionResult r, double[] result, double[] expected, double prec)
+        private static void PrintNlResult(SolutionResult r, double[] result, double[] expected, double prec)
         {
             string s = "ANALYTIC NL Solution:";
 
@@ -130,7 +130,7 @@ namespace Analytics.Tests
             options = CreateOptions();
             result = null;
             actual = solver.Solve(system, x0, options, ref result);
-            PrintNLResult(actual, result, expected, options.SolutionPrecision);
+            PrintNlResult(actual, result, expected, options.SolutionPrecision);
 
             f1 = Sphere();
             f2 = ParaboloidZ();
@@ -147,7 +147,7 @@ namespace Analytics.Tests
             options = CreateOptions();
             result = null;
             actual = solver.Solve(system, x0, options, ref result);
-            PrintNLResult(actual, result, expected, options.SolutionPrecision);
+            PrintNlResult(actual, result, expected, options.SolutionPrecision);
         }
     }
 }

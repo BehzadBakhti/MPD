@@ -5,25 +5,56 @@ using UnityEngine;
 [System.Serializable]
 public class Link :MonoBehaviour
 {
-    public string param;
-    public double flowRate;
-    public IPressureDropFunc pressureDrop; // dP= f(Q)
-    public Node[] nodes= new Node[2];
-    public string equation;
-    public double friction;
+
+    public string Param;
+    public double FlowRate;
+    public IPressureDropFunc PressureDrop; // dP= f(Q)
+
+    public List<Node> Nodes { get; set; } = new List<Node>();
+    public string Equation;
+    public double Friction;
+    public bool IsOpen= true;
 
 
-void Start(){
- 
-}
+    void Start(){
+    
+    }
+
     public string GetEquation(){
+    
+        string fQ=GetComponentInParent<BaseTool>().HeadLossEq(Param, FlowRate);
+        Equation= Nodes[0].Param + "-" + Nodes[1].Param + "-" + fQ + "=0";
 
-       string fQ=transform.root.GetComponent<BaseTool>().HeadLossEq(param, flowRate);
-        equation= nodes[0].param+"-"+nodes[1].param+"-"+fQ;
-
-        return equation;
+        return Equation;
 
     }
 
+    public void AddNode(Node n){
+        Nodes.Add(n);
+    }
+
+    public void Unlink(){
+        for(int j = 0; j < Nodes.Count; j++)
+        {
+
+            for (int i = 0; i < Nodes[j].Links.Count; i++)
+            {
+                if (Nodes[j].Links[i]==this)
+                {
+                    Nodes[j].Links[i]=null;
+                }  
+            }
+            Nodes[j]=null;
+
+        }
+    }
+
+    public bool Validate(){
+        if(this.Nodes.Count<2)
+            return false;
+
+        return true;
+        
+        }
 
 }

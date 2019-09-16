@@ -1,66 +1,41 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
+using TouchScript.Gestures;
 using UnityEngine;
 
 public abstract class BaseTool : MonoBehaviour {
 
+public event Action<GameObject> ClickedOnObject;
 	
-	public Connection[] connections;
-	public string nominalSize;
-	public bool isSelected, isAssembeled;
-	private	Connection nearConnection=null, desiredConnection=null;
-	private	Connection[] allConnections;
+	[SerializeField]protected Connection[] Connections;
+	public string NominalSize;
+	public bool IsSelected, IsAssembeled;
 
+    private PressGesture _press;
 
-	public void Assemble()
-	{
+	private void Awake(){
+		Connections=GetComponentsInChildren<Connection>();
+        _press = GetComponent<PressGesture>();
+    }
 
-		nearConnection=null;
-		desiredConnection=null;
-		allConnections= FindObjectsOfType<Connection>();
-		foreach (Connection item in allConnections)
-		{
-			//if(!item.isConnected)
-		//	Debug.Log(item.transform.root.gameObject.GetInstanceID());
-		}
-		//return;
-		float dist=1000;	
-	
-		for (int j = 0; j < connections.Length; j++)
-		{
-			for (int i = 0; i < allConnections.Length; i++)
-			{
-				float currDist=Vector3.Distance(connections[j].transform.position, allConnections[i].transform.position);
-				if((currDist<dist) && (allConnections[i].transform.root.gameObject.GetInstanceID()!=gameObject.GetInstanceID()))
-				{
-					if (!allConnections[i].isConnected)
-					{
-						nearConnection=allConnections[i];
-						desiredConnection=connections[j];
-						dist=currDist;
-					}
-				}	
-			}
-		}
-
-		Transform refTrnsfrm=nearConnection.transform;
-		Vector3 localPos= desiredConnection.transform.localPosition;
-		Quaternion localRot= desiredConnection.transform.localRotation;
-		Quaternion newConnRot= Quaternion.FromToRotation(desiredConnection.transform.up, refTrnsfrm.up);
-
-		transform.rotation=newConnRot*Quaternion.Inverse(localRot);
-		transform.position=refTrnsfrm.position;
-		transform.Translate(-localPos);
-		
-		desiredConnection.Connect(nearConnection);
+	public Connection[] GetConnections(){
+		return Connections;
 	}
-
-	public void UnAssembel(){
-
-	}
-
 	public abstract string HeadLossEq(string param, double flowRate);
 
 
-// End of file
+    private void OnEnable()
+    {
+        _press.Pressed += _press_Pressed;
+    }
+
+    private void OnDisable()
+    {
+        _press.Pressed -= _press_Pressed;
+    }
+    private void _press_Pressed(object sender, EventArgs e)
+    {
+        ClickedOnObject?.Invoke(this.gameObject);
+    }
 }

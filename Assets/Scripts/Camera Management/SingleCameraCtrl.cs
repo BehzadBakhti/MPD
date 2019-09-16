@@ -5,43 +5,43 @@ using UnityEngine;
 public class SingleCameraCtrl : MonoBehaviour {
 
 	public float PanSpeed=20f;
-	public float zoomSpeed=20f;
-	public float rotateSpeed=20f;
+	public float ZoomSpeed=20f;
+	public float RotateSpeed=20f;
 
-	public static bool isSelectOn=true, isPanOn= false, isZoomOn=false, isRotateOn=false;
-	public Vector3 defaultPosition;
-	public Vector3 offsetPos;
-		Vector3 lastPos;
-	public Camera thisCamera;
+	public static bool IsSelectOn=true, IsPanOn= false, IsZoomOn=false, IsRotateOn=false;
+	public Vector3 DefaultPosition;
+	public Vector3 OffsetPos;
+		Vector3 _lastPos;
+	public Camera ThisCamera;
 	//public Vector3 defaultRotation;
-	public Quaternion defaultRotation;
+	public Quaternion DefaultRotation;
 
 	
 	void Start () {
-		lastPos=Input.mousePosition;
-		thisCamera= gameObject.GetComponent<Camera>();
-		defaultPosition=transform.position;
-		defaultRotation= transform.rotation;
+		_lastPos=Input.mousePosition;
+		ThisCamera= gameObject.GetComponent<Camera>();
+		DefaultPosition=transform.position;
+		DefaultRotation= transform.rotation;
 	}
 	
 	void Update(){
 
 		PanTheView();
-		zoomTheView();
+		ZoomTheView();
 			if(gameObject.name=="Free Camera"){
-				rotateTheView();
+				RotateTheView();
 			}
 		}
 
 	private void PanTheView(){
 
-		if((Input.GetMouseButtonDown(2) && !Input.GetKey("left alt")) || (isPanOn && Input.GetMouseButtonDown(0))){
+		if((Input.GetMouseButtonDown(2) && !Input.GetKey("left alt")) || (IsPanOn && Input.GetMouseButtonDown(0))){
 					
-				lastPos=Input.mousePosition;// transform.localPosition-thisCamera.ScreenToWorldPoint(Input.mousePosition);
+				_lastPos=Input.mousePosition;// transform.localPosition-thisCamera.ScreenToWorldPoint(Input.mousePosition);
 
-		}else if((Input.GetMouseButton(2) && !Input.GetKey("left alt")) || (isPanOn && Input.GetMouseButton(0))){
-				offsetPos= thisCamera.ScreenToViewportPoint(lastPos-Input.mousePosition);
-				Vector3 move = new Vector3(offsetPos.x * PanSpeed,  offsetPos.y * PanSpeed, 0);
+		}else if((Input.GetMouseButton(2) && !Input.GetKey("left alt")) || (IsPanOn && Input.GetMouseButton(0))){
+				OffsetPos= ThisCamera.ScreenToViewportPoint(_lastPos-Input.mousePosition);
+				Vector3 move = new Vector3(OffsetPos.x * PanSpeed,  OffsetPos.y * PanSpeed, 0);
 				transform.Translate(move, Space.Self);
 
 				Vector3 pos = transform.position;
@@ -50,23 +50,23 @@ public class SingleCameraCtrl : MonoBehaviour {
 				pos.z = Mathf.Clamp(transform.position.z, -100, 100);
 				transform.position = pos;
 				//transform.Translate()
-				lastPos=Input.mousePosition;
+				_lastPos=Input.mousePosition;
 	
 		}
 		
 	}
 
-private void zoomTheView(){
+private void ZoomTheView(){
 
 	
-		if((Input.GetMouseButtonDown(1) && Input.GetKey("left alt") ) || (isZoomOn && Input.GetMouseButtonDown(0))){
+		if((Input.GetMouseButtonDown(1) && Input.GetKey("left alt") ) || (IsZoomOn && Input.GetMouseButtonDown(0))){
 					
-				lastPos=Input.mousePosition;// transform.localPosition-thisCamera.ScreenToWorldPoint(Input.mousePosition);
+				_lastPos=Input.mousePosition;// transform.localPosition-thisCamera.ScreenToWorldPoint(Input.mousePosition);
 				
-		}else if((Input.GetMouseButton(1) && Input.GetKey("left alt") ) || (isZoomOn && Input.GetMouseButton(0)) ){
-				offsetPos= thisCamera.ScreenToViewportPoint(lastPos-Input.mousePosition);
+		}else if((Input.GetMouseButton(1) && Input.GetKey("left alt") ) || (IsZoomOn && Input.GetMouseButton(0)) ){
+				OffsetPos= ThisCamera.ScreenToViewportPoint(_lastPos-Input.mousePosition);
 			
-				float dY=offsetPos.y;
+				float dY=OffsetPos.y;
 	
 				transform.position-=transform.forward*dY*20;
 
@@ -76,25 +76,25 @@ private void zoomTheView(){
 				pos.z = Mathf.Clamp(transform.position.z, -100, 100);
 				transform.position = pos;
 
-				lastPos=Input.mousePosition;
+				_lastPos=Input.mousePosition;
 			}
 
 	}
 
 
 
-	private void rotateTheView(){
-		Vector3 mousPosWorld= thisCamera.ScreenToViewportPoint(lastPos);
-		if((Input.GetMouseButtonDown(2) && Input.GetKey("left alt") ) || (isRotateOn && Input.GetMouseButtonDown(0))){
+	private void RotateTheView(){
+		Vector3 mousPosWorld= ThisCamera.ScreenToViewportPoint(_lastPos);
+		if((Input.GetMouseButtonDown(2) && Input.GetKey("left alt") ) || (IsRotateOn && Input.GetMouseButtonDown(0))){
 
 			
 					
-				lastPos=Input.mousePosition;// transform.localPosition-thisCamera.ScreenToWorldPoint(Input.mousePosition);
-				mousPosWorld= thisCamera.ScreenToViewportPoint(lastPos);	
-		}else if((Input.GetMouseButton(2) && Input.GetKey("left alt")  ) || (isRotateOn && Input.GetMouseButton(0))){
-				offsetPos= thisCamera.ScreenToViewportPoint(lastPos-Input.mousePosition);
-				float dX=offsetPos.x;
-				float dY=offsetPos.y;
+				_lastPos=Input.mousePosition;// transform.localPosition-thisCamera.ScreenToWorldPoint(Input.mousePosition);
+				mousPosWorld= ThisCamera.ScreenToViewportPoint(_lastPos);	
+		}else if((Input.GetMouseButton(2) && Input.GetKey("left alt")  ) || (IsRotateOn && Input.GetMouseButton(0))){
+				OffsetPos= ThisCamera.ScreenToViewportPoint(_lastPos-Input.mousePosition);
+				float dX=OffsetPos.x;
+				float dY=OffsetPos.y;
 				Vector3 target;
 		Ray camRay= new Ray(transform.position, transform.forward);
 		RaycastHit hit;
@@ -108,8 +108,8 @@ private void zoomTheView(){
 				Vector3 mosPosVect= new Vector3(mousPosWorld.x-0.5f, mousPosWorld.y-0.5f,0);
 			
 				if(mosPosVect.magnitude<0.25){
-				transform.RotateAround(target, transform.right, rotateSpeed*dY);
-				transform.RotateAround(target, transform.up, -rotateSpeed*dX);
+				transform.RotateAround(target, transform.right, RotateSpeed*dY);
+				transform.RotateAround(target, transform.up, -RotateSpeed*dX);
 
 				}else
 				{
@@ -119,9 +119,9 @@ private void zoomTheView(){
 					float angleSign= crossVect.z==0 ? 0 : crossVect.z/ Mathf.Abs(crossVect.z);
 					float rotAngle= Vector3.Cross(mosPosVect, dragVect).magnitude*angleSign/mosPosVect.magnitude;
 					//	Debug.Log(mosPosVect);
-					transform.RotateAround(target, transform.forward, rotateSpeed*rotAngle);
+					transform.RotateAround(target, transform.forward, RotateSpeed*rotAngle);
 				}
-				lastPos=Input.mousePosition;
+				_lastPos=Input.mousePosition;
 
 			}
 		}

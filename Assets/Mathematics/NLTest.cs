@@ -14,25 +14,25 @@ using UnityEngine;
 //     /// <summary>
 //     /// Interaction logic for App.xaml
 //     /// </summary>
-    public  class NLTest : MonoBehaviour
+    public  class NlTest : MonoBehaviour
     {
 
 // 			// variables of the analytical system
-		public	string[] variables = { "x", "y", "z" };
+		public	string[] Variables = { "x", "y", "z" };
 			// analytical expressions of the system's equations
-		public	string[] functions = { "x^2+y^2+z^2-1", // sphere
+		public	string[] Functions = { "x^2+y^2+z^2-1", // sphere
 								   "x^2+y^2-z",     // paraboloid along the z axis
 								   "-x+2*y^2+z^2"   // paraboloid along the x axis
 								 };
 
-		public	double[] x0;
-			SolverOptions options;
-		public	double[] result;
-		public	double[] expected;
-			SolutionResult actual;
+		public	double[] X0;
+			SolverOptions _options;
+		public	double[] Result;
+		public	double[] Expected;
+			SolutionResult _actual;
 
 			// creating nonlinear solver instance - Newton-Raphson solver.
-			NonlinearSolver solver = new NewtonRaphsonSolver();
+			NonlinearSolver _solver = new NewtonRaphsonSolver();
 
 			// initial guess for variable values
 			
@@ -41,10 +41,10 @@ using UnityEngine;
 
 void Start(){
     
-			NonlinearSystem system = new AnalyticalSystem(variables, functions);
+			NonlinearSystem system = new AnalyticalSystem(Variables, Functions);
           //  x0 = new double[] { 0.0, 5.0};
             
-             options = new SolverOptions()
+             _options = new SolverOptions()
 			{
 				MaxIterationCount = 100,
 				SolutionPrecision = 1e-5
@@ -52,11 +52,11 @@ void Start(){
 
 
 
-            result = null;
+            Result = null;
 			// solving the system
-			actual = solver.Solve(system, x0, options, ref result);
+			_actual = _solver.Solve(system, X0, _options, ref Result);
 
-			expected = new double[] { -4d/3d, -5d/3d }; // expected values
+			Expected = new double[] { -4d/3d, -5d/3d }; // expected values
 			// printing solution result into console out
 			
         }

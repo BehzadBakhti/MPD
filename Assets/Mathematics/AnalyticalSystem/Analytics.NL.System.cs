@@ -15,11 +15,11 @@ namespace Analytics.Nonlinear
     public class AnalyticalSystem: ConstructedSystem
     {
         #region Analytical data members
-        protected Translator translator;
-        protected string[] functions;
-		protected string[,] dfunctions;
-        protected Formula[] formulae;
-        protected Formula[,] fderivatives;
+        protected Translator Translator;
+        protected string[] Functions;
+		protected string[,] Dfunctions;
+        protected Formula[] Formulae;
+        protected Formula[,] Fderivatives;
         #endregion Analytical data members
 
         /// <summary>
@@ -31,11 +31,11 @@ namespace Analytics.Nonlinear
         {
             if (variables == null || variables.Length == 0) return false;
 
-            translator = new Translator();
+            Translator = new Translator();
             int l = variables.Length;
             for (int i = 0; i < l; i++)
             {
-                if (!translator.Add(variables[i], (double)0.0))
+                if (!Translator.Add(variables[i], (double)0.0))
                 {
                     throw new InvalidNameException(variables[i]);
                 }
@@ -54,38 +54,38 @@ namespace Analytics.Nonlinear
             if (f == null || f.Length == 0) return false;
 
             int l = f.Length;
-            functions = new string[l];
-            formulae = new Formula[l];
+            Functions = new string[l];
+            Formulae = new Formula[l];
             for (int i = 0; i < l; i++)
             {
-                if (!translator.CheckSyntax(f[i]))
+                if (!Translator.CheckSyntax(f[i]))
                 {
-                    functions = null;
-                    formulae = null;
+                    Functions = null;
+                    Formulae = null;
                     return false;
                 }
 
-                functions[i] = f[i];
-                formulae[i] = translator.BuildFormula(functions[i]);
-                if (formulae[i].ResultType != typeof(double))
+                Functions[i] = f[i];
+                Formulae[i] = Translator.BuildFormula(Functions[i]);
+                if (Formulae[i].ResultType != typeof(double))
                 {
-                    Type t = formulae[i].ResultType;
-                    functions = null;
-                    formulae = null;
+                    Type t = Formulae[i].ResultType;
+                    Functions = null;
+                    Formulae = null;
                     throw new WrongArgumentException("Function must return real value.", typeof(double), t);
                 }
             }
 
-			dfunctions = new string[l, l];
-            fderivatives = new Formula[l,l];
+			Dfunctions = new string[l, l];
+            Fderivatives = new Formula[l,l];
             try
             {
                 for (int i = 0; i < l; i++)
                 {
                     for (int j = 0; j < l; j++)
                     {
-						dfunctions[i, j] = translator.Derivative(functions[i], translator.Variables[j].Name);
-						fderivatives[i, j] = translator.BuildFormula(dfunctions[i, j]);
+						Dfunctions[i, j] = Translator.Derivative(Functions[i], Translator.Variables[j].Name);
+						Fderivatives[i, j] = Translator.BuildFormula(Dfunctions[i, j]);
                     }
                 }
             }
@@ -93,7 +93,7 @@ namespace Analytics.Nonlinear
             {
                 // if some derivative coud not be calculated -
                 // the system does not support Jacobian.
-                fderivatives = null;
+                Fderivatives = null;
             }
 
             return true;
@@ -108,7 +108,7 @@ namespace Analytics.Nonlinear
             int l = values.Length;
             for (int i = 0; i < l; i++)
             {
-                translator.Variables[i].Value = values[i];
+                Translator.Variables[i].Value = values[i];
             }
         }
 
@@ -119,7 +119,7 @@ namespace Analytics.Nonlinear
         /// <returns></returns>
         protected double Equation(int i)
         {
-            return (double)formulae[i].Calculate();
+            return (double)Formulae[i].Calculate();
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Analytics.Nonlinear
         /// <returns></returns>
         protected double Derivative(int i, int j)
         {
-            return (double)fderivatives[i,j].Calculate();
+            return (double)Fderivatives[i,j].Calculate();
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Analytics.Nonlinear
         /// </summary>
         protected void CreateEquations()
         {
-            int l = formulae.Length;
+            int l = Formulae.Length;
             equations = new Equation[l];
             for (int i = 0; i < l; i++)
             {
@@ -156,7 +156,7 @@ namespace Analytics.Nonlinear
 
             // if formulae of derivatives are not assigned -
             // system will not support Jacobian.
-            if (fderivatives != null)
+            if (Fderivatives != null)
             {
                 derivatives = new Derivative[l];
                 for (int i = 0; i < l; i++)
@@ -221,7 +221,7 @@ namespace Analytics.Nonlinear
 			string s = string.Empty;
 		    for (int i = 0; i < l; i++)
 		    {
-			    s += Environment.NewLine + ExpressionBuilder.BuildArrayIndexes(new List<string> {i.ToString()}) + "=" + functions[i];
+			    s += Environment.NewLine + ExpressionBuilder.BuildArrayIndexes(new List<string> {i.ToString()}) + "=" + Functions[i];
 		    }
 		    result += Environment.NewLine + "Equations:" + s;
 
@@ -233,7 +233,7 @@ namespace Analytics.Nonlinear
 				    for (int j = 0; j < l; j++)
 				    {
 					    s += Environment.NewLine +
-					         ExpressionBuilder.BuildArrayIndexes(new List<string> {i.ToString(), translator.Variables[j].Name}) + "=" + dfunctions[i, j];
+					         ExpressionBuilder.BuildArrayIndexes(new List<string> {i.ToString(), Translator.Variables[j].Name}) + "=" + Dfunctions[i, j];
 				    }
 			    }
 			    result += Environment.NewLine + "Jacobian:" + s;

@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class Tee : BaseTool
 {
-  public Node teeNode;
+  public Node TeeNode= new Node();
 
     public override string HeadLossEq(string param, double flowRate)
     {
-        throw new System.NotImplementedException();
+        return "";
     }
 
     void Start(){
   
-     foreach (Connection conn in connections)
+     foreach (Connection conn in Connections)
      {
-        teeNode.links.Add(conn.attachedLink);
-        conn.attachedLink.nodes[1]=teeNode;
+        TeeNode.Links.Add(conn.AttachedLink);
+        conn.AttachedLink.AddNode(TeeNode);
      }
   }
 

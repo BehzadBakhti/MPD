@@ -1,38 +1,39 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Connection : MonoBehaviour {
 
-	// Use this for initialization
-	public bool isConnected;
-	public string connectionName;
-	public Connection connectedTo;
-	public ConnectionType connectionType;
-	public ConnectionSize connectionSize;
+    // Use this for initialization
+    public event Action<Connection, Connection> OnConnected;
+	public bool IsConnected;
+	public ConnectionType ConnectionType;
+	public ConnectionSize ConnectionSize;
+    [SerializeField]private Link _attachedLink;
 
+    public Link AttachedLink
+    {
+        get => _attachedLink;
+        set => _attachedLink = value;
+    }
 
-	//public Node attachedNode;
-
-	//[HideInInspector]
-	public Link attachedLink;
-
-
-
-	public void Connect(Connection cn){
-		cn.isConnected=true;
-		this.isConnected=true;
-
-		Node newNode= new Node();
-		newNode.AddLink(cn.attachedLink);
-		newNode.AddLink(this.attachedLink);
+    public void Connect(Connection cn){
+        
+		cn.IsConnected=true;
+		this.IsConnected=true;
+		OnConnected?.Invoke(this,cn);
+		// Node newNode= new Node();
+		// newNode.AddLink(cn.AttachedLink);
+		// newNode.AddLink(this.AttachedLink);
 		
-		NodalNetwork.instance.AddNode(newNode);
+		// NodalNetwork.instance.CreateNode(newNode);
 	}
 	public void Disconnect(){
 		
 	}
  
  // END OF FILE
+
 }
 	

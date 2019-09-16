@@ -5,10 +5,10 @@ namespace RuntimeGizmos
 {
 	public struct Square
 	{
-		public Vector3 bottomLeft;
-		public Vector3 bottomRight;
-		public Vector3 topLeft;
-		public Vector3 topRight;
+		public Vector3 BottomLeft;
+		public Vector3 BottomRight;
+		public Vector3 TopLeft;
+		public Vector3 TopRight;
 
 		public Vector3 this[int index]
 		{
@@ -17,15 +17,15 @@ namespace RuntimeGizmos
 				switch (index)
 				{
 					case 0:
-						return this.bottomLeft;
+						return this.BottomLeft;
 					case 1:
-						return this.topLeft;
+						return this.TopLeft;
 					case 2:
-						return this.topRight;
+						return this.TopRight;
 					case 3:
-						return this.bottomRight;
+						return this.BottomRight;
 					case 4:
-						return this.bottomLeft; //so we wrap around back to start
+						return this.BottomLeft; //so we wrap around back to start
 					default:
 						return Vector3.zero;
 				}

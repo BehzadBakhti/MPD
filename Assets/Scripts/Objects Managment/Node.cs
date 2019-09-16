@@ -6,32 +6,28 @@ using UnityEngine;
 public class Node 
 {
 
-    public string param;
-    public float head;
-    public string equation="";
-    public List<Link> links = new List<Link>();
+    public string Param;
+    public double Head;
+    public string Equation="";
+    public List<Link> Links = new List<Link>();
 
 
     public string GetEquation(){
 
-        foreach (Link link in links)
+        foreach (Link link in Links)
         {
-           equation+=link.param+"+"; 
+           Equation+=link.Param+"-"; 
         }
-        equation+= "0=0";
+        Equation+= "0=0";
 
-        return equation;
+        return Equation;
 
     }
 
     public void AddLink(Link lnk){
-        links.Add(lnk);
-        if(lnk.nodes[0]==null){
-            lnk.nodes[0]=this;
+        Links.Add(lnk);
+        lnk.AddNode(this);
 
-        }else{
-            lnk.nodes[1]=this;
-        }
     
     }
 

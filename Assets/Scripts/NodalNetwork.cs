@@ -2,63 +2,92 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
 public class NodalNetwork : MonoBehaviour
 {
-   public List<Node> networkNodes;
-   public List<Link> networkLinks;
+   public HashSet<Node> NetworkNodes;
+   public HashSet<Link> NetworkLinks;
   
-   private int nodeCount=0 , linkCount=0;
-   public List<string> equations;
-
-   public static NodalNetwork instance;
+   [SerializeField] private int _nodeCount=0 , _linkCount=0;
+   public List<string> Equations;
+ 
     
 
     void Awake(){
-        if(instance==null){
-            instance=this;
-            DontDestroyOnLoad(this);
-
-        }else{
-            Destroy(this);
-        }
+        NetworkNodes= new HashSet<Node>();
+        NetworkLinks = new HashSet<Link>();
    }
 
-    public void AddNode(Node n){
-        nodeCount++;
-        n.param="h"+(nodeCount).ToString();
-        networkNodes.Add(n);
-        foreach (Link lnk in n.links)
+    public void CreateNode(Connection conn1, Connection conn2){
+        Node nd = new Node {Param = "h" + _nodeCount};
+        _nodeCount++;
+         nd.AddLink(conn1.AttachedLink);
+         nd.AddLink(conn2.AttachedLink);
+        AddNode(nd);
+
+    }
+
+
+    private void AddNode(Node nd)
+    {
+       
+       bool isNewNode= NetworkNodes.Add(nd);
+       if (!isNewNode) return;
+       _nodeCount++;
+
+        foreach (Link lnk in nd.Links)
         {
-            bool alreadyRegistered=false;
-            foreach (Link item in networkLinks)
+            bool isNewLink = NetworkLinks.Add(lnk);
+            if (!isNewLink) continue;
+
+            _linkCount++;
+            lnk.Param = "q" + _linkCount;
+            foreach (var lnkNode in lnk.Nodes)
             {
-              
-                if(Object.ReferenceEquals(item, lnk)){
-                    alreadyRegistered=true;
-                    
-                }
-            }
-          
-            if(!alreadyRegistered){
-                linkCount++;
-                
-                lnk.param="q"+(linkCount).ToString();
-                networkLinks.Add(lnk);
+                AddNode(lnkNode);
             }
         }
     }
-   public void GenerateTree(){}
+    
+    public void RemoveLink(Link lnk){
+        
+    }
 
-   public void EqMatrix(){
-        foreach (Node node in networkNodes)
-        {
-         equations.Add(node.GetEquation());
+    public void ChangeLinkState(Link lnk, bool newState){
+
+    }
   
+
+    public void EqMatrix(){
+       ValidateLinks();
+        foreach(Node node in NetworkNodes){
+            string eq=node.GetEquation();
+            if(node.Param=="h0"){
+                eq="q_in-"+eq;
+            }
+            Equations.Add(eq);
+
         }
-        foreach(Link link in networkLinks){
-            equations.Add(link.GetEquation());
+        foreach(Link link in NetworkLinks){
+            if(link.IsOpen)
+                Equations.Add(link.GetEquation());
         }
    }
+
+
+    public void ValidateLinks(){
+       foreach (Link lnk in NetworkLinks){
+           if(!lnk.Validate()) {
+               CompleteNetwork(lnk);
+           }
+       }
+   }
+
+    void CompleteNetwork(Link lnk){
+        Node lastNode = new Node {Param = "h_out", Head = Fluids.BackPressure};
+        lnk.AddNode(lastNode);
+       }
 
    
 }

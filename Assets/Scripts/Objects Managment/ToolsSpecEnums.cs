@@ -1,16 +1,16 @@
 public enum ConnectionType
 {
-	connTyp_1,
-	connTyp_2,
-	connTyp_3
+	ConnTyp1,
+	ConnTyp2,
+	ConnTyp3
 }
 
 
 public enum ConnectionSize 
 	{
-		connSize_1,
-		connSize_2,
-		connSize_3
+		ConnSize1,
+		ConnSize2,
+		ConnSize3
 	}
 
 

@@ -5,44 +5,44 @@ namespace RuntimeGizmos
 {
 	public struct AxisInfo
 	{
-		public Vector3 pivot;
-		public Vector3 xDirection;
-		public Vector3 yDirection;
-		public Vector3 zDirection;
+		public Vector3 Pivot;
+		public Vector3 XDirection;
+		public Vector3 YDirection;
+		public Vector3 ZDirection;
 
 		public void Set(Transform target, Vector3 pivot, TransformSpace space)
 		{
 			if(space == TransformSpace.Global)
 			{
-				xDirection = Vector3.right;
-				yDirection = Vector3.up;
-				zDirection = Vector3.forward;
+				XDirection = Vector3.right;
+				YDirection = Vector3.up;
+				ZDirection = Vector3.forward;
 			}
 			else if(space == TransformSpace.Local)
 			{
-				xDirection = target.right;
-				yDirection = target.up;
-				zDirection = target.forward;
+				XDirection = target.right;
+				YDirection = target.up;
+				ZDirection = target.forward;
 			}
 
-			this.pivot = pivot;
+			this.Pivot = pivot;
 		}
 
 		public Vector3 GetXAxisEnd(float size)
 		{
-			return pivot + (xDirection * size);
+			return Pivot + (XDirection * size);
 		}
 		public Vector3 GetYAxisEnd(float size)
 		{
-			return pivot + (yDirection * size);
+			return Pivot + (YDirection * size);
 		}
 		public Vector3 GetZAxisEnd(float size)
 		{
-			return pivot + (zDirection * size);
+			return Pivot + (ZDirection * size);
 		}
 		public Vector3 GetAxisEnd(Vector3 direction, float size)
 		{
-			return pivot + (direction * size);
+			return Pivot + (direction * size);
 		}
 	}
 }

@@ -5,13 +5,13 @@ namespace RuntimeGizmos
 {
 	public struct IntersectPoints
 	{
-		public Vector3 first;
-		public Vector3 second;
+		public Vector3 First;
+		public Vector3 Second;
 
 		public IntersectPoints(Vector3 first, Vector3 second)
 		{
-			this.first = first;
-			this.second = second;
+			this.First = first;
+			this.Second = second;
 		}
 	}
 }

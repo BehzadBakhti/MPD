@@ -7,13 +7,13 @@ namespace RuntimeGizmos
 {
 	public abstract class SelectCommand : ICommand
 	{
-		protected Transform target;
-		protected TransformGizmo transformGizmo;
+		protected Transform Target;
+		protected TransformGizmo TransformGizmo;
 
 		public SelectCommand(TransformGizmo transformGizmo, Transform target)
 		{
-			this.transformGizmo = transformGizmo;
-			this.target = target;
+			this.TransformGizmo = transformGizmo;
+			this.Target = target;
 		}
 
 		public abstract void Execute();
@@ -22,27 +22,27 @@ namespace RuntimeGizmos
 
 	public class AddTargetCommand : SelectCommand
 	{
-		List<Transform> targetRoots = new List<Transform>();
+		List<Transform> _targetRoots = new List<Transform>();
 
 		public AddTargetCommand(TransformGizmo transformGizmo, Transform target, List<Transform> targetRoots) : base(transformGizmo, target)
 		{
 			//Since we might have had a child selected and then selected the parent, the child would have been removed from the selected,
 			//so we store all the targetRoots before we add so that if we undo we can properly have the children selected again.
-			this.targetRoots.AddRange(targetRoots);
+			this._targetRoots.AddRange(targetRoots);
 		}
 
 		public override void Execute()
 		{
-			transformGizmo.AddTarget(target, false);
+			TransformGizmo.AddTarget(Target, false);
 		}
 
 		public override void UnExecute()
 		{
-			transformGizmo.RemoveTarget(target, false);
+			TransformGizmo.RemoveTarget(Target, false);
 
-			for(int i = 0; i < targetRoots.Count; i++)
+			for(int i = 0; i < _targetRoots.Count; i++)
 			{
-				transformGizmo.AddTarget(targetRoots[i], false);
+				TransformGizmo.AddTarget(_targetRoots[i], false);
 			}
 		}
 	}
@@ -53,60 +53,60 @@ namespace RuntimeGizmos
 
 		public override void Execute()
 		{
-			transformGizmo.RemoveTarget(target, false);
+			TransformGizmo.RemoveTarget(Target, false);
 		}
 
 		public override void UnExecute()
 		{
-			transformGizmo.AddTarget(target, false);
+			TransformGizmo.AddTarget(Target, false);
 		}
 	}
 
 	public class ClearTargetsCommand : SelectCommand
 	{
-		List<Transform> targetRoots = new List<Transform>();
+		List<Transform> _targetRoots = new List<Transform>();
 
 		public ClearTargetsCommand(TransformGizmo transformGizmo, List<Transform> targetRoots) : base(transformGizmo, null)
 		{
-			this.targetRoots.AddRange(targetRoots);
+			this._targetRoots.AddRange(targetRoots);
 		}
 
 		public override void Execute()
 		{
-			transformGizmo.ClearTargets(false);
+			TransformGizmo.ClearTargets(false);
 		}
 
 		public override void UnExecute()
 		{
-			for(int i = 0; i < targetRoots.Count; i++)
+			for(int i = 0; i < _targetRoots.Count; i++)
 			{
-				transformGizmo.AddTarget(targetRoots[i], false);
+				TransformGizmo.AddTarget(_targetRoots[i], false);
 			}
 		}
 	}
 
 	public class ClearAndAddTargetCommand : SelectCommand
 	{
-		List<Transform> targetRoots = new List<Transform>();
+		List<Transform> _targetRoots = new List<Transform>();
 
 		public ClearAndAddTargetCommand(TransformGizmo transformGizmo, Transform target, List<Transform> targetRoots) : base(transformGizmo, target)
 		{
-			this.targetRoots.AddRange(targetRoots);
+			this._targetRoots.AddRange(targetRoots);
 		}
 
 		public override void Execute()
 		{
-			transformGizmo.ClearTargets(false);
-			transformGizmo.AddTarget(target, false);
+			TransformGizmo.ClearTargets(false);
+			TransformGizmo.AddTarget(Target, false);
 		}
 
 		public override void UnExecute()
 		{
-			transformGizmo.RemoveTarget(target, false);
+			TransformGizmo.RemoveTarget(Target, false);
 
-			for(int i = 0; i < targetRoots.Count; i++)
+			for(int i = 0; i < _targetRoots.Count; i++)
 			{
-				transformGizmo.AddTarget(targetRoots[i], false);
+				TransformGizmo.AddTarget(_targetRoots[i], false);
 			}
 		}
 	}

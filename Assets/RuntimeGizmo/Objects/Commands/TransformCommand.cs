@@ -6,48 +6,48 @@ namespace RuntimeGizmos
 {
 	public class TransformCommand : ICommand
 	{
-		TransformValues newValues;
-		TransformValues oldValues;
+		TransformValues _newValues;
+		TransformValues _oldValues;
 
-		Transform transform;
-		TransformGizmo transformGizmo;
+		Transform _transform;
+		TransformGizmo _transformGizmo;
 
 		public TransformCommand(TransformGizmo transformGizmo, Transform transform)
 		{
-			this.transformGizmo = transformGizmo;
-			this.transform = transform;
+			this._transformGizmo = transformGizmo;
+			this._transform = transform;
 
-			oldValues = new TransformValues() {position=transform.position, rotation=transform.rotation, scale=transform.localScale};
+			_oldValues = new TransformValues() {Position=transform.position, Rotation=transform.rotation, Scale=transform.localScale};
 		}
 
 		public void StoreNewTransformValues()
 		{
-			newValues = new TransformValues() {position=transform.position, rotation=transform.rotation, scale=transform.localScale};
+			_newValues = new TransformValues() {Position=_transform.position, Rotation=_transform.rotation, Scale=_transform.localScale};
 		}
 		
 		public void Execute()
 		{
-			transform.position = newValues.position;
-			transform.rotation = newValues.rotation;
-			transform.localScale = newValues.scale;
+			_transform.position = _newValues.Position;
+			_transform.rotation = _newValues.Rotation;
+			_transform.localScale = _newValues.Scale;
 
-			transformGizmo.SetPivotPoint();
+			_transformGizmo.SetPivotPoint();
 		}
 
 		public void UnExecute()
 		{
-			transform.position = oldValues.position;
-			transform.rotation = oldValues.rotation;
-			transform.localScale = oldValues.scale;
+			_transform.position = _oldValues.Position;
+			_transform.rotation = _oldValues.Rotation;
+			_transform.localScale = _oldValues.Scale;
 
-			transformGizmo.SetPivotPoint();
+			_transformGizmo.SetPivotPoint();
 		}
 
 		struct TransformValues
 		{
-			public Vector3 position;
-			public Quaternion rotation;
-			public Vector3 scale;
+			public Vector3 Position;
+			public Quaternion Rotation;
+			public Vector3 Scale;
 		}
 	}
 }

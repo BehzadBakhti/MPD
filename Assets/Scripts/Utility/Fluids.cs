@@ -4,32 +4,33 @@ using System.Collections.Generic;
 
 public static class Fluids
 {
-    public static double density=0.2;
-    public static double viscosity=0.2;
+    public static double Density=0.2;
+    public static double Viscosity=0.2;
+    public static double BackPressure=0;
 
-        public static double FrictionFactor(double reynoldsN, double rughness){
+        public static double FrictionFactor(double reynoldsN, double roughness){
 
         if(reynoldsN<2000){
            return reynoldsN/64;
         }
 
-        double f_up=0.1f;
-        double f_low=0.001f;
+        double fUp=0.1f;
+        double fLow=0.001f;
         double avg;
-            while(f_up-f_low>0.000001f){
-             avg= (f_up+ f_low)/2;
-             double A= rughness/3.7;
-             double B= reynoldsN*Math.Pow(avg, 0.5f);
+            while(fUp-fLow>0.000001f){
+             avg= (fUp+ fLow)/2;
+             double a= roughness/3.71;
+             double b= reynoldsN*Math.Pow(avg, 0.5f);
             
-             double E=1/Math.Pow(avg, 0.5);
-             if(E+2*Math.Log10(rughness/3.71 +2.51/B)>0){
-                 f_low=avg;
+             double e=1/Math.Pow(avg, 0.5);
+             if(e+2*Math.Log10(a +2.51/b)>0){
+                 fLow=avg;
              }else{
-                 f_up=avg;
+                 fUp=avg;
              }
             
             }
-        return f_up;
+        return fUp;
     }
 
         public static double Reynolds(double density, double velocity, double diameter, double viscosity){

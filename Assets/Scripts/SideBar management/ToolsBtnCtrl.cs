@@ -1,50 +1,72 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ToolsBtnCtrl : MonoBehaviour {
-	private SceneMgr thisSceneMgr;
-	private Camera activeCam;
+public class ToolsBtnCtrl : MonoBehaviour
+{
+    public event Action<string> CreateIsPressed; 
+	
+	private Camera _activeCam;
+    [SerializeField] private Text _toolName;
 
-	public Image thumbNail;
-	public GameObject toolModel;
-	public GameObject createdObj;
-	float dist, farPoint=30;
-	Ray camRay, mousRay;
-	RaycastHit hit;
-	Vector3 target=Vector3.zero;
-	void Start()
-	{
-	thisSceneMgr=FindObjectOfType<SceneMgr>();	
-	}
-	public void BeginDrag(){
-		activeCam=GameObject.FindObjectOfType<Camera>(); //#################################################################
-		camRay= new Ray(activeCam.transform.position, activeCam.transform.forward);
-			if(Physics.Raycast(camRay, out hit))
-			{
-				target= hit.transform.position;
-				//Debug.Log("Hit");
-			}else{
-				target=activeCam.transform.position+activeCam.transform.forward*farPoint;
-			}
+	public GameObject ToolModel;
+	private string _toolType;
+    private float _dist, _farPoint=30;
+    private Ray _camRay, _mouseRay;
+    private RaycastHit _hit;
 
-		dist=Vector3.Distance(activeCam.transform.position, target)/Mathf.Cos((activeCam.fieldOfView)*Mathf.PI/360);
-		mousRay= activeCam.ScreenPointToRay(Input.mousePosition);
-		Vector3 ObjectPos=activeCam.transform.position+ mousRay.direction*dist;
-		createdObj=	Instantiate(toolModel,ObjectPos,Quaternion.identity);
-		//createdObj.GetComponent<SingleToolStatus>().thisSceneMgr=thisSceneMgr;
-		createdObj.GetComponent<SingleToolMovement>().isBeingCreated=true;
+    private Button _button;
+
+    private void Awake()
+    {
+        _button = GetComponent<Button>();
+        _button.onClick.AddListener(OnCreateIsPressed);
+	
 	}
 
+    public void Init(string toolType )
+    {
 
-	 public void Dragging(){
-		createdObj.GetComponent<SingleToolMovement>().OnMouseDrag();
-	}
+        _toolType = toolType;
+        _toolName.text = toolType;
+
+
+    }
+	//public void BeginDrag(){
+	//	_activeCam=GameObject.FindObjectOfType<Camera>(); //#################################################################
+	//	_camRay= new Ray(_activeCam.transform.position, _activeCam.transform.forward);
+	//		if(Physics.Raycast(_camRay, out _hit))
+	//		{
+	//			_target= _hit.transform.position;
+	//			//Debug.Log("Hit");
+	//		}else{
+	//			_target=_activeCam.transform.position+_activeCam.transform.forward*_farPoint;
+	//		}
+
+	//	_dist=Vector3.Distance(_activeCam.transform.position, _target)/Mathf.Cos((_activeCam.fieldOfView)*Mathf.PI/360);
+	//	_mouseRay= _activeCam.ScreenPointToRay(Input.mousePosition);
+	//	Vector3 objectPos=_activeCam.transform.position+ _mouseRay.direction*_dist;
+	//	_createdObj=	Instantiate(ToolModel,objectPos,Quaternion.identity);
+	//	//createdObj.GetComponent<SingleToolStatus>().thisSceneMgr=thisSceneMgr;
+	//	_createdObj.GetComponent<SingleToolMovement>().IsBeingCreated=true;
+	//}
+
+
+	// public void Dragging(){
+	//	_createdObj.GetComponent<SingleToolMovement>().OnMouseDrag();
+	//}
 	
 
-	public void EndDrag(){
-		thisSceneMgr.SelectionHandler(createdObj);
+	//public void EndDrag(){
+	//	_thisSceneMgr.SelectionHandler(_createdObj);
 
-	}
+	//}
+
+    protected virtual void OnCreateIsPressed()
+    {
+      //  print(ToolModel.GetComponent<BaseTool>().GetType().ToString());
+        CreateIsPressed?.Invoke(_toolType);
+    }
 }

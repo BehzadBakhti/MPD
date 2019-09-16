@@ -11,9 +11,9 @@ namespace Analytics.Tests
 
     public static class TestUtils
     {
-        private static double precision;
-        private static double bigpositive;
-        private static double bignegative;
+        private static double _precision;
+        private static double _bigpositive;
+        private static double _bignegative;
 
         static TestUtils()
         {
@@ -22,12 +22,12 @@ namespace Analytics.Tests
 
         private static bool IsBigPositive(double expected)
         {
-            return expected >= bigpositive;
+            return expected >= _bigpositive;
         }
 
         private static bool IsBigNegative(double expected)
         {
-            return expected <= bignegative;
+            return expected <= _bignegative;
         }
 
         /// <summary>
@@ -37,15 +37,15 @@ namespace Analytics.Tests
         {
             get
             {
-                return precision;
+                return _precision;
             }
             set
             {
                 if (value > 0.0)
                 {
-                    precision = value;
-                    bigpositive = 1.0 / precision;
-                    bignegative = -1.0 / precision;
+                    _precision = value;
+                    _bigpositive = 1.0 / _precision;
+                    _bignegative = -1.0 / _precision;
                 }
                 else
                 {
@@ -82,7 +82,7 @@ namespace Analytics.Tests
                 return IsBigNegative(actual);
             }
 
-            return Math.Abs(expected - actual) <= precision;
+            return Math.Abs(expected - actual) <= _precision;
         }
 
         /// <summary>
