@@ -17,7 +17,7 @@ public class SideBarView: MonoBehaviour
         _createPanel = GetComponentInChildren<CreatePanelView>();
     }
 
-    public void Init(List<GameObject> toolsPrefabs)
+    public void Init(Dictionary<string, GameObject> toolsPrefabs)
     {
        // print(_createPanel.gameObject.name);
 

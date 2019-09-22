@@ -382,6 +382,7 @@ MonoBehaviour:
   NominalSize: 
   IsSelected: 0
   IsAssembeled: 0
+  IsUnique: 1
   RcdNode:
     Param: 
     Head: 0
@@ -470,6 +471,7 @@ MonoBehaviour:
   FlowRate: 0
   Equation: 
   Friction: 0
+  IsOpen: 1
 --- !u!1 &6890012475547814620
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,6 +519,7 @@ MonoBehaviour:
   FlowRate: 0
   Equation: 
   Friction: 0
+  IsOpen: 1
 --- !u!1 &7540755645185340769
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,6 +567,7 @@ MonoBehaviour:
   FlowRate: 0
   Equation: 
   Friction: 0
+  IsOpen: 1
 --- !u!1 &7758722814020345733
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,6 +615,7 @@ MonoBehaviour:
   FlowRate: 0
   Equation: 
   Friction: 0
+  IsOpen: 1
 --- !u!1 &8969618050803631694
 GameObject:
   m_ObjectHideFlags: 0

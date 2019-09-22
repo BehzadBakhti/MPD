@@ -9,14 +9,14 @@ public class CreatePanelView :MonoBehaviour
     private List<ToolsBtnCtrl> _toolBtns;
     [SerializeField] private GameObject _createBtnPrefab;
 
-    public void Init(List<GameObject> toolPrefabsList)
+    public void Init(Dictionary<string, GameObject> toolPrefabsList)
     {
-        foreach (GameObject tool in toolPrefabsList)
+        foreach (var tool in toolPrefabsList)
         {
            // print(tool.name);
             ToolsBtnCtrl btnCtrl = Instantiate(_createBtnPrefab, this.transform).GetComponent<ToolsBtnCtrl>();
             btnCtrl.CreateIsPressed += OnCreateIsPressed;
-            btnCtrl.Init(tool.gameObject.name);
+            btnCtrl.Init(tool.Key);
         }
     }
 

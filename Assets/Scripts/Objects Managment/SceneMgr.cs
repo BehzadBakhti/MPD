@@ -49,7 +49,7 @@ public class SceneMgr : MonoBehaviour {
 
     private void Init()
     {
-       List<GameObject> prefabsList= _toolsManager.GetToolsPrefabList();
+        Dictionary<string, GameObject> prefabsList = _toolsManager.MpdPrefabDictionary;
       // print(prefabsList.Count);
        _uiManager.Init(prefabsList);
     }
@@ -59,7 +59,8 @@ public class SceneMgr : MonoBehaviour {
     {
         // print(_toolsManager.name);
        GameObject obj= _toolsManager.CreateTool(tool, _cameraManager.ActiveCam);
-       SelectionHandler(obj);
+        if(obj)
+           SelectionHandler(obj);
     }
     private void _toolsManager_OnToolConnected(Connection arg1, Connection arg2)
     {

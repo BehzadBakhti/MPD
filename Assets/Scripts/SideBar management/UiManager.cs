@@ -18,7 +18,7 @@ public class UiManager : MonoBehaviour
         _topBarView = GetComponentInChildren<TopBarView>();
     }
 
-    public void Init(List<GameObject> toolsPrefabs)
+    public void Init(Dictionary<string, GameObject> toolsPrefabs)
     {
         _sideBarView.Init(toolsPrefabs);
         _sideBarView.CreateIsPressed += OnCreateIsPressed;

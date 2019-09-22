@@ -31,5 +31,9 @@ public class Node
     
     }
 
+    public void RemoveLink(Link lnk)
+    {
+        Links.Remove(lnk);
+    }
 }
 

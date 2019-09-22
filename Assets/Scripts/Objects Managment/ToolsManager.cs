@@ -7,10 +7,12 @@ public class ToolsManager : MonoBehaviour
 {
     public event Action<Connection, Connection> OnToolConnected;
     public event Action<GameObject> ClickedOnObject;
-    private List<BaseTool> _mpdTools;
+
+    private Dictionary<string, BaseTool> _mpdToolsInAssembly;
     private List<Connection> _allConnections;
     private ToolFactory _factory;
     private Camera _activeCamera;
+    public Dictionary<string, GameObject> MpdPrefabDictionary { get; private set; }
 
     private void Awake()
     {
@@ -21,13 +23,20 @@ public class ToolsManager : MonoBehaviour
 
     private void Start()
     {
+        _mpdToolsInAssembly = new Dictionary<string, BaseTool>();
+        MpdPrefabDictionary = new Dictionary<string, GameObject>();
         Init();
     }
 
     public void Init()
     {
+        GetToolsPrefabList();
+        foreach (var tool in GetComponentsInChildren<BaseTool>())
+        {
+            _mpdToolsInAssembly.Add(tool.name, tool);
+        }
        
-        _factory.Init(GetToolsPrefabList());
+        _factory.Init(MpdPrefabDictionary);
     }
 
     private void GetAllConnections()
@@ -43,9 +52,18 @@ public class ToolsManager : MonoBehaviour
         OnToolConnected?.Invoke(conn1, conn2);
     }
     Transform _refTrnsfrm;
+
+ 
+
     public GameObject CreateTool(string type, Camera activeCamera){
-        
-       BaseTool obj= _factory.CreateTool(type, activeCamera);
+       // print(type);
+        if (CheckForExistance(type))
+        {
+            print("It is not possible to have more than 1 instance of " + type + " in your MPD Assembly");
+            return null;
+        }
+        BaseTool obj= _factory.CreateTool(type, activeCamera);
+        _mpdToolsInAssembly.Add(obj.name, obj);
         obj.ClickedOnObject += OnClickedOnObject;
         return obj.gameObject;
         //_mpdTools.Add(obj);
@@ -83,12 +101,7 @@ public class ToolsManager : MonoBehaviour
 
         if (nearConnection != null)
         {
-            //Vector3 pos= new Vector3();
-            //Quaternion rot= new Quaternion();
-            //   pos= nearConnection.transform.position;
-            //   rot = nearConnection.transform.rotation;
-            //   _refTrnsfrm.position = pos;
-            //   _refTrnsfrm.rotation = rot;
+
             _refTrnsfrm=nearConnection.transform;
                _refTrnsfrm.Rotate(180f,0f,0f);
 
@@ -108,13 +121,27 @@ public class ToolsManager : MonoBehaviour
         }
 
 
-    public List<GameObject> GetToolsPrefabList()
+    public void GetToolsPrefabList()
     {
         List<GameObject> prefabsList=new List<GameObject>();
         prefabsList.AddRange(Resources.LoadAll<GameObject>("Prefabs/MPDTools"));
-       
 
-        return prefabsList;
+        foreach (var prefab in prefabsList)
+        {
+            MpdPrefabDictionary.Add(prefab.name, prefab);
+        }
+       
+    }
+
+
+    private bool CheckForExistance(string type)
+    {
+        if (MpdPrefabDictionary[type].GetComponent<BaseTool>().IsUnique)
+        {
+            if (_mpdToolsInAssembly.ContainsKey(type))
+                return true;
+        }
+        return false;
     }
 
     protected virtual void OnClickedOnObject(GameObject obj)

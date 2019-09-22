@@ -33,28 +33,10 @@ public class Link :MonoBehaviour
         Nodes.Add(n);
     }
 
-    public void Unlink(){
-        for(int j = 0; j < Nodes.Count; j++)
-        {
 
-            for (int i = 0; i < Nodes[j].Links.Count; i++)
-            {
-                if (Nodes[j].Links[i]==this)
-                {
-                    Nodes[j].Links[i]=null;
-                }  
-            }
-            Nodes[j]=null;
-
-        }
+    public bool Validate()
+    {
+        return this.Nodes.Count >= 2;
     }
-
-    public bool Validate(){
-        if(this.Nodes.Count<2)
-            return false;
-
-        return true;
-        
-        }
 
 }

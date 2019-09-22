@@ -8,15 +8,16 @@ public class NodalNetwork : MonoBehaviour
 {
    public HashSet<Node> NetworkNodes;
    public HashSet<Link> NetworkLinks;
+
   
    [SerializeField] private int _nodeCount=0 , _linkCount=0;
-   public List<string> Equations;
- 
-    
+   public HashSet<string> Equations;
 
-    void Awake(){
+
+   private void Awake(){
         NetworkNodes= new HashSet<Node>();
         NetworkLinks = new HashSet<Link>();
+        Equations= new HashSet<string>();
    }
 
     public void CreateNode(Connection conn1, Connection conn2){
@@ -51,11 +52,29 @@ public class NodalNetwork : MonoBehaviour
     }
     
     public void RemoveLink(Link lnk){
-        
+           foreach (var node in lnk.Nodes)
+           {
+               node.RemoveLink(lnk);
+           }
+
+           lnk.Nodes[0] = null;
+           lnk.Nodes[1] = null;
+           NetworkLinks.Remove(lnk);
     }
 
-    public void ChangeLinkState(Link lnk, bool newState){
+    public void GetEquationTree(Node rootNode)
+    {
+        Equations.Add(rootNode.GetEquation());
+            foreach (var lnk in rootNode.Links)
+            {
+                Equations.Add(lnk.GetEquation());
+                foreach (var node in lnk.Nodes)
+                {
+                    if(node==rootNode) continue;
+                        GetEquationTree(node);
 
+                }
+            }
     }
   
 
