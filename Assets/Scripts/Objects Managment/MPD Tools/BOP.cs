@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class Bop : BaseTool
 {
+
+
+    void Start()
+    {
+        CenterNode = new Node();
+        foreach (Connection conn in Connections)
+        {
+            CenterNode.Links.Add(conn.AttachedLink);
+            conn.AttachedLink.AddNode(CenterNode);
+        }
+    }
+
     public override string HeadLossEq(string param, double flowRate)
     {
         return "0";

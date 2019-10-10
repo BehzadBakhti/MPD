@@ -8,6 +8,7 @@ public class UiManager : MonoBehaviour
     public event Action<string> CreateIsPressed;
     public event EventHandler AssembleBtnClicked;
     public event EventHandler UnAssembleBtnClicked;
+    public event EventHandler CalculateBtnClicked;
 
     private SideBarView _sideBarView;
     private TopBarView _topBarView;
@@ -24,6 +25,12 @@ public class UiManager : MonoBehaviour
         _sideBarView.CreateIsPressed += OnCreateIsPressed;
         _sideBarView.AssembleBtnClicked += _sideBarView_AssembleBtnClicked;
         _sideBarView.UnAssembleBtnClicked += _sideBarView_UnAssembleBtnClicked;
+        _sideBarView.CalculateBtnClicked += _sideBarView_CalculateBtnClicked;
+    }
+
+    private void _sideBarView_CalculateBtnClicked(object sender, EventArgs e)
+    {
+        CalculateBtnClicked?.Invoke(sender, e);
     }
 
     private void _sideBarView_UnAssembleBtnClicked(object sender, EventArgs e)

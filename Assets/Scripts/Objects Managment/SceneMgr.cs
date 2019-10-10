@@ -23,11 +23,17 @@ public class SceneMgr : MonoBehaviour {
         _uiManager.CreateIsPressed += _uiManager_CreateIsPressed;
         _uiManager.AssembleBtnClicked += _uiManager_AssembleBtnClicked;
         _uiManager.UnAssembleBtnClicked += _uiManager_UnAssembleBtnClicked;
+        _uiManager.CalculateBtnClicked += _uiManager_CalculateBtnClicked;
 		
 		_toolsManager.OnToolConnected += _toolsManager_OnToolConnected;
         _toolsManager.ClickedOnObject += SelectionHandler;
         
 	}
+
+    private void _uiManager_CalculateBtnClicked(object sender, System.EventArgs e)
+    {
+        _nodalNetwork.EqMatrix();
+    }
 
     private void _uiManager_UnAssembleBtnClicked(object sender, System.EventArgs e)
     {
@@ -43,8 +49,9 @@ public class SceneMgr : MonoBehaviour {
 
     private void Start()
     {
-        Init();
+       
         _selectedObjects= new List<GameObject>();
+        Init();
     }
 
     private void Init()
@@ -52,6 +59,7 @@ public class SceneMgr : MonoBehaviour {
         Dictionary<string, GameObject> prefabsList = _toolsManager.MpdPrefabDictionary;
       // print(prefabsList.Count);
        _uiManager.Init(prefabsList);
+        _nodalNetwork.Init(_toolsManager.MpdToolsInAssembly);
     }
 
     // Events  

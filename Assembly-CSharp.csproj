@@ -4,6 +4,9 @@
     <LangVersion>latest</LangVersion>
     <CscToolPath>C:\Program Files\Unity\Editor\Data\Tools\RoslynScripts</CscToolPath>
     <CscToolExe>unity_csc.bat</CscToolExe>
+    <_TargetFrameworkDirectories>non_empty_path_generated_by_rider_editor_plugin</_TargetFrameworkDirectories>
+    <_FullFrameworkReferenceAssemblyPaths>non_empty_path_generated_by_rider_editor_plugin</_FullFrameworkReferenceAssemblyPaths>
+    <DisableHandlePackageFileConflicts>true</DisableHandlePackageFileConflicts>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -111,6 +114,7 @@
     <Compile Include="Assets\Scripts\Objects Managment\ToolsSpecEnums.cs" />
     <Compile Include="Assets\Scripts\SideBar management\CreatePanelView.cs" />
     <Compile Include="Assets\Scripts\SideBar management\InspectorView.cs" />
+    <Compile Include="Assets\Scripts\SideBar management\PropertiesView.cs" />
     <Compile Include="Assets\Scripts\SideBar management\SideBarView.cs" />
     <Compile Include="Assets\Scripts\SideBar management\ToolsBtnCtrl.cs" />
     <Compile Include="Assets\Scripts\SideBar management\TopBarView.cs" />

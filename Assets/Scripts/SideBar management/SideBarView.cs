@@ -7,6 +7,7 @@ public class SideBarView: MonoBehaviour
     public event Action<string> CreateIsPressed;
     public event EventHandler AssembleBtnClicked;
     public event EventHandler UnAssembleBtnClicked;
+    public event EventHandler CalculateBtnClicked;
 
     private InspectorView _inspectorView;
     private CreatePanelView _createPanel;
@@ -26,12 +27,17 @@ public class SideBarView: MonoBehaviour
 
         _inspectorView.AssembleBtnClicked += _inspectorView_AssembleBtnClicked;
         _inspectorView.UnAssembleBtnClicked += _inspectorView_UnAssembleBtnClicked;
+        _inspectorView.CalculateBtnClicked += _inspectorView_CalculateBtnClicked;
+    }
+
+    private void _inspectorView_CalculateBtnClicked(object sender, EventArgs e)
+    {
+        CalculateBtnClicked?.Invoke(sender, e);
     }
 
     private void _inspectorView_UnAssembleBtnClicked(object sender, EventArgs e)
     {
         UnAssembleBtnClicked?.Invoke(this, EventArgs.Empty);
-       
     }
 
     private void _inspectorView_AssembleBtnClicked(object sender, EventArgs e)

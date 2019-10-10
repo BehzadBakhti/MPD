@@ -24,12 +24,12 @@ public class Valve : BaseTool , IClosable
         if(this.Openness>=5)
         this.Openness+=5f;
   }
-
+                   
     public override string HeadLossEq(string param, double flowRate)
     {
          // H=8fLQ^2/(pi^2 * D^5 * g)
          if(Openness <= 0){
-            return (param+"=0");
+            return ("0");
          }
       double velocity=4*flowRate/(Math.PI*InnerDiameter*InnerDiameter);
       double rN= Fluids.Reynolds(Fluids.Density,velocity, InnerDiameter,Fluids.Viscosity );

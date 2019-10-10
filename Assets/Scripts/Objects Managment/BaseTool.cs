@@ -11,7 +11,8 @@ public event Action<GameObject> ClickedOnObject;
 	[SerializeField]protected Connection[] Connections;
 	public string NominalSize;
 	public bool IsSelected, IsAssembeled, IsUnique;
-    
+    public Node CenterNode { get; set; } = null;
+
 
     private PressGesture _press;
 

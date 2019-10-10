@@ -8,11 +8,11 @@ public class ToolsManager : MonoBehaviour
     public event Action<Connection, Connection> OnToolConnected;
     public event Action<GameObject> ClickedOnObject;
 
-    private Dictionary<string, BaseTool> _mpdToolsInAssembly;
     private List<Connection> _allConnections;
     private ToolFactory _factory;
     private Camera _activeCamera;
     public Dictionary<string, GameObject> MpdPrefabDictionary { get; private set; }
+    public List<BaseTool> MpdToolsInAssembly { get; set; }
 
     private void Awake()
     {
@@ -23,9 +23,10 @@ public class ToolsManager : MonoBehaviour
 
     private void Start()
     {
-        _mpdToolsInAssembly = new Dictionary<string, BaseTool>();
+        MpdToolsInAssembly = new List< BaseTool>();
         MpdPrefabDictionary = new Dictionary<string, GameObject>();
         Init();
+
     }
 
     public void Init()
@@ -33,7 +34,7 @@ public class ToolsManager : MonoBehaviour
         GetToolsPrefabList();
         foreach (var tool in GetComponentsInChildren<BaseTool>())
         {
-            _mpdToolsInAssembly.Add(tool.name, tool);
+            MpdToolsInAssembly.Add(tool);
         }
        
         _factory.Init(MpdPrefabDictionary);
@@ -63,7 +64,7 @@ public class ToolsManager : MonoBehaviour
             return null;
         }
         BaseTool obj= _factory.CreateTool(type, activeCamera);
-        _mpdToolsInAssembly.Add(obj.name, obj);
+        MpdToolsInAssembly.Add( obj);
         obj.ClickedOnObject += OnClickedOnObject;
         return obj.gameObject;
         //_mpdTools.Add(obj);
@@ -138,8 +139,13 @@ public class ToolsManager : MonoBehaviour
     {
         if (MpdPrefabDictionary[type].GetComponent<BaseTool>().IsUnique)
         {
-            if (_mpdToolsInAssembly.ContainsKey(type))
-                return true;
+            foreach (var item in MpdToolsInAssembly)
+            {
+                if (item.GetType().ToString() == type)
+                {
+                    return true;
+                }    
+            }
         }
         return false;
     }

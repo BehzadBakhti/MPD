@@ -4,6 +4,9 @@
     <LangVersion>latest</LangVersion>
     <CscToolPath>C:\Program Files\Unity\Editor\Data\Tools\RoslynScripts</CscToolPath>
     <CscToolExe>unity_csc.bat</CscToolExe>
+    <_TargetFrameworkDirectories>non_empty_path_generated_by_rider_editor_plugin</_TargetFrameworkDirectories>
+    <_FullFrameworkReferenceAssemblyPaths>non_empty_path_generated_by_rider_editor_plugin</_FullFrameworkReferenceAssemblyPaths>
+    <DisableHandlePackageFileConflicts>true</DisableHandlePackageFileConflicts>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -348,6 +351,9 @@
     </Reference>
     <Reference Include="NRTE">
       <HintPath>F:/BEHZAD/Unity/UP/Archieve/MPD/Assets/Mathematics/ANALYTICS/NRTE.dll</HintPath>
+    </Reference>
+    <Reference Include="JetBrains.Rider.Unity.Editor.Plugin.Repacked">
+      <HintPath>F:/BEHZAD/Unity/UP/Archieve/MPD/Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll</HintPath>
     </Reference>
     <Reference Include="OSCsharp">
       <HintPath>F:/BEHZAD/Unity/UP/Archieve/MPD/Assets/TouchScript/Modules/TUIO/Libraries/OSCsharp.dll</HintPath>
