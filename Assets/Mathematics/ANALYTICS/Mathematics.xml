@@ -90,7 +90,7 @@
             <summary>
             Equals
             </summary>
-            <param name="obj"></param>
+            <param name="tool"></param>
             <returns></returns>
         </member>
         <member name="M:Mathematics.Fractions.Fraction.GetHashCode">
@@ -699,7 +699,7 @@
             <summary>
             Equals
             </summary>
-            <param name="obj"></param>
+            <param name="tool"></param>
             <returns></returns>
         </member>
         <member name="M:Mathematics.LA.RMatrix.GetHashCode">
@@ -1320,7 +1320,7 @@
             <summary>
             Equals
             </summary>
-            <param name="obj"></param>
+            <param name="tool"></param>
             <returns></returns>
         </member>
         <member name="M:Mathematics.LA.Matrix.GetHashCode">
@@ -2305,7 +2305,7 @@
             <summary>
             Equals with default vector precision.
             </summary>
-            <param name="obj"></param>
+            <param name="tool"></param>
             <returns></returns>
         </member>
         <member name="M:Mathematics.LA.Vector3D.GetHashCode">
@@ -2699,7 +2699,7 @@
             <summary>
             Equals with default tensor precision.
             </summary>
-            <param name="obj"></param>
+            <param name="tool"></param>
             <returns></returns>
         </member>
         <member name="M:Mathematics.LA.Tensor3D.GetHashCode">
@@ -3050,7 +3050,7 @@
             <summary>
             Equals
             </summary>
-            <param name="obj"></param>
+            <param name="tool"></param>
             <returns></returns>
         </member>
         <member name="M:Mathematics.LA.Vector.GetHashCode">
@@ -3108,7 +3108,7 @@
             <summary>
             Equals with default tensor precision.
             </summary>
-            <param name="obj"></param>
+            <param name="tool"></param>
             <returns></returns>
         </member>
         <member name="M:Mathematics.LA.DTensor3D.GetHashCode">
@@ -3434,7 +3434,7 @@
             <summary>
             Equals with default tensor precision.
             </summary>
-            <param name="obj"></param>
+            <param name="tool"></param>
             <returns></returns>
         </member>
         <member name="M:Mathematics.LA.STensor3D.GetHashCode">
@@ -3599,7 +3599,7 @@
             <summary>
             Equal with precision.
             </summary>
-            <param name="obj"></param>
+            <param name="tool"></param>
             <returns></returns>
         </member>
         <member name="M:Mathematics.LA.ATensor3D.GetHashCode">

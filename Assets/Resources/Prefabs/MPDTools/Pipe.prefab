@@ -68,6 +68,7 @@ MonoBehaviour:
   NominalSize: 
   IsSelected: 0
   IsAssembeled: 0
+  IsUnique: 0
   InnerDiameter: 0
   Rughness: 0
   Length: 0
@@ -99,8 +100,6 @@ MonoBehaviour:
   OnStateChange:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: TouchScript.Gestures.Gesture+GestureEvent, Assembly-CSharp, Version=2.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   basicEditor: 1
   generalProps: 0
   limitsProps: 0
@@ -117,8 +116,6 @@ MonoBehaviour:
   OnPress:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: TouchScript.Gestures.Gesture+GestureEvent, Assembly-CSharp, Version=2.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   ignoreChildren: 0
 --- !u!1 &1478417805335652
 GameObject:
@@ -185,6 +182,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -370,6 +368,7 @@ MonoBehaviour:
   FlowRate: 0
   Equation: 
   Friction: 0
+  IsOpen: 1
 --- !u!1 &4934679102484256053
 GameObject:
   m_ObjectHideFlags: 0

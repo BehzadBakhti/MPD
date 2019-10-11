@@ -5,7 +5,7 @@ using UnityEngine;
 public class SingleToolMovement : MonoBehaviour {
 	private Camera _activeCam;
 	private SceneMgr _thisSceneMgr;
-	float _dist, _farPoint=30;
+    private float _dist, _farPoint=30;
 	public bool IsBeingCreated=false;
 	Ray  _mousRay;
 	Vector3 _offSet=Vector3.zero, _target=Vector3.zero;
@@ -22,7 +22,7 @@ void OnMouseUp()
 }
 
 void OnMouseDown(){
-	_thisSceneMgr.SelectionHandler(gameObject);
+	_thisSceneMgr.SelectionHandler(gameObject.GetComponent<BaseTool>());
 }
 
 public  void OnMouseDrag(){

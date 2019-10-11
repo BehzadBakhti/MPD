@@ -47,4 +47,9 @@ public class UiManager : MonoBehaviour
     {
         CreateIsPressed?.Invoke(obj);
     }
+
+    public void ShowProperties(BaseTool tool)
+    {
+        _sideBarView.InitPropertiesView(tool.ViewType);
+    }
 }

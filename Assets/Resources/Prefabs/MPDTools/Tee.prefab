@@ -56,11 +56,7 @@ MonoBehaviour:
   NominalSize: 
   IsSelected: 0
   IsAssembeled: 0
-  TeeNode:
-    Param: 
-    Head: 0
-    Equation: 
-    Links: []
+  IsUnique: 0
 --- !u!114 &2185157932853956848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,8 +98,6 @@ MonoBehaviour:
   OnStateChange:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: TouchScript.Gestures.Gesture+GestureEvent, Assembly-CSharp, Version=2.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   basicEditor: 1
   generalProps: 0
   limitsProps: 0
@@ -120,8 +114,6 @@ MonoBehaviour:
   OnPress:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: TouchScript.Gestures.Gesture+GestureEvent, Assembly-CSharp, Version=2.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   ignoreChildren: 0
 --- !u!1 &4796134161092781554
 GameObject:
@@ -221,6 +213,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -509,11 +502,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5305482080248711289, guid: 73dad882787e1cb439ce4cc9a7209f91,
         type: 3}
-      propertyPath: attachedLink
-      value: 
-      objectReference: {fileID: 2550302050440122662}
-    - target: {fileID: 5305482080248711289, guid: 73dad882787e1cb439ce4cc9a7209f91,
-        type: 3}
       propertyPath: _attachedLink
       value: 
       objectReference: {fileID: 2550302050440122662}
@@ -606,11 +594,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5305482080248711289, guid: 73dad882787e1cb439ce4cc9a7209f91,
         type: 3}
-      propertyPath: attachedLink
-      value: 
-      objectReference: {fileID: 8457493200127774694}
-    - target: {fileID: 5305482080248711289, guid: 73dad882787e1cb439ce4cc9a7209f91,
-        type: 3}
       propertyPath: _attachedLink
       value: 
       objectReference: {fileID: 8457493200127774694}
@@ -701,11 +684,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
-    - target: {fileID: 5305482080248711289, guid: 73dad882787e1cb439ce4cc9a7209f91,
-        type: 3}
-      propertyPath: attachedLink
-      value: 
-      objectReference: {fileID: 3809927887354961952}
     - target: {fileID: 5305482080248711289, guid: 73dad882787e1cb439ce4cc9a7209f91,
         type: 3}
       propertyPath: _attachedLink

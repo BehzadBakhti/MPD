@@ -11,13 +11,13 @@ public class Tee : BaseTool
         return "0";
     }
 
-    void Start(){
+    private void Start(){
         CenterNode = new Node();
          foreach (Connection conn in Connections)
          {
             CenterNode.Links.Add(conn.AttachedLink);
             conn.AttachedLink.AddNode(CenterNode);
          }
-      }
+    }
 
 }

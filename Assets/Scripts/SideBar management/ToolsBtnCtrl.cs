@@ -23,15 +23,15 @@ public class ToolsBtnCtrl : MonoBehaviour
     {
         _button = GetComponent<Button>();
         _button.onClick.AddListener(OnCreateIsPressed);
-	
-	}
+        _toolName = GetComponentInChildren<Text>();
+
+
+    }
 
     public void Init(string toolType )
     {
-
         _toolType = toolType;
         _toolName.text = toolType;
-
 
     }
 	//public void BeginDrag(){

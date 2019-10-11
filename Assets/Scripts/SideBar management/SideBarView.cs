@@ -49,4 +49,9 @@ public class SideBarView: MonoBehaviour
     {
         CreateIsPressed?.Invoke(obj);
     }
+
+    public void InitPropertiesView(Type toolViewType)
+    {
+        _inspectorView.InitView(toolViewType);
+    }
 }

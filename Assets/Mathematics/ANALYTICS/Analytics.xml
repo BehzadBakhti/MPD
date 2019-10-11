@@ -518,7 +518,7 @@
         </member>
         <member name="M:Analytics.Translator.EvaluateLiteral(System.String,System.Type@)">
             <summary>
-            Evaluates literal to an object
+            Evaluates literal to an toolect
             (uses Parser's method).
             </summary>
             <param name="literal"></param>
@@ -652,14 +652,14 @@
                   (function does not check the syntax).
             </summary>
             <param name="value">Formula string</param>
-            <returns>Calculated object, or throws an exception</returns>
+            <returns>Calculated toolect, or throws an exception</returns>
         </member>
         <member name="M:Analytics.Translator.Calculate(Analytics.Syntactic.BaseExpression)">
             <summary>
             Calculates expression value for current variable values.
             </summary>
             <param name="expr">Expression</param>
-            <returns>Calculated object, or throws an exception</returns>
+            <returns>Calculated toolect, or throws an exception</returns>
         </member>
         <member name="M:Analytics.Translator.CheckSyntax(System.String)">
             <summary>
@@ -864,7 +864,7 @@
         </member>
         <member name="M:Analytics.Utilities.SafeToString(System.Object)">
             <summary>
-            Safe call ToString (for null object returns null symbol)
+            Safe call ToString (for null toolect returns null symbol)
             </summary>
             <param name="x"></param>
             <returns></returns>
@@ -1290,9 +1290,9 @@
         <member name="T:Analytics.Expression">
             <summary>
             String Expression structure.
-            Contains one string field and connected with it expression object.
+            Contains one string field and connected with it expression toolect.
             Overloads operators to manipulate with strings as expressions (multiply, negate and so on).
-            All algorithms decompose strings into Syntactic Expression objects, then make operations with them, 
+            All algorithms decompose strings into Syntactic Expression toolects, then make operations with them, 
             simplify the result and finally reconstruct the result back to string.
             NOTE: an expression cannot be changed during lifetime and is simplified on creation.
             NOTE: only Explicit conversion from/to string is provided, because implicit one
@@ -1311,7 +1311,7 @@
         </member>
         <member name="M:Analytics.Expression.#ctor(Analytics.Syntactic.BaseExpression)">
             <summary>
-            Creates Expression structure by BaseExpression object.
+            Creates Expression structure by BaseExpression toolect.
             Used in overloaded operators to return result values.
             </summary>
             <param name="value"></param>
@@ -1430,7 +1430,7 @@
         </member>
         <member name="T:Analytics.WrongArgumentException">
             <summary>
-            Argument Exception - got object is not what is expected
+            Argument Exception - got toolect is not what is expected
             </summary>
         </member>
         <member name="M:Analytics.WrongArgumentException.#ctor(System.String,System.Object,System.Object)">
@@ -2767,11 +2767,11 @@
         <member name="T:Analytics.Variables.ObjectVariable">
             <summary>
             The General Scalar variable class
-            that can contain ONE object (of any type).
-            The variable data type is determined by the type of the object.
+            that can contain ONE toolect (of any type).
+            The variable data type is determined by the type of the toolect.
             </summary>
         </member>
-        <member name="F:Analytics.Variables.ObjectVariable.objectType">
+        <member name="F:Analytics.Variables.ObjectVariable.toolectType">
             <summary>
             The value type
             </summary>
@@ -2791,7 +2791,7 @@
         <member name="M:Analytics.Variables.ObjectVariable.AssignValueType">
             <summary>
             Assigns Value Type using current information
-            (if object is not null - gets the type of the object,
+            (if toolect is not null - gets the type of the toolect,
             if null leaves the type unchanged)
             </summary>
         </member>
@@ -4401,7 +4401,7 @@
             <summary>
             ==
             </summary>
-            <param name="obj"></param>
+            <param name="tool"></param>
             <returns></returns>
         </member>
         <member name="M:Analytics.Syntactic.SymbolPair.GetHashCode">

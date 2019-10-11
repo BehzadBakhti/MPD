@@ -43,13 +43,11 @@ public class SceneMgr : MonoBehaviour {
     {
         if (_selectedObjects.Count>1)
                 return;
-        
         _toolsManager.Assemble(_selectedObjects[0].GetComponent<BaseTool>());
     }
 
     private void Start()
     {
-       
         _selectedObjects= new List<GameObject>();
         Init();
     }
@@ -57,8 +55,8 @@ public class SceneMgr : MonoBehaviour {
     private void Init()
     {
         Dictionary<string, GameObject> prefabsList = _toolsManager.MpdPrefabDictionary;
-      // print(prefabsList.Count);
-       _uiManager.Init(prefabsList);
+
+        _uiManager.Init(prefabsList);
         _nodalNetwork.Init(_toolsManager.MpdToolsInAssembly);
     }
 
@@ -66,9 +64,9 @@ public class SceneMgr : MonoBehaviour {
     private void _uiManager_CreateIsPressed(string tool)
     {
         // print(_toolsManager.name);
-       GameObject obj= _toolsManager.CreateTool(tool, _cameraManager.ActiveCam);
+       var obj= _toolsManager.CreateTool(tool, _cameraManager.ActiveCam);
         if(obj)
-           SelectionHandler(obj);
+           SelectionHandler(obj.GetComponent<BaseTool>());
     }
     private void _toolsManager_OnToolConnected(Connection arg1, Connection arg2)
     {
@@ -77,42 +75,28 @@ public class SceneMgr : MonoBehaviour {
 
 
     //Methods
-    public void SelectionHandler(GameObject obj){
-		BaseTool statusScript=obj.GetComponent<BaseTool>();
+    public void SelectionHandler(BaseTool tool){
+		
 		if(Input.GetKey(KeyCode.LeftControl)||Input.GetKey(KeyCode.RightControl)){
 
-			if(!statusScript.IsSelected){
-				_selectedObjects.Add(obj);
-			}else
+			if(!tool.IsSelected){
+				_selectedObjects.Add(tool.gameObject);
+                _uiManager.ShowProperties(tool);
+            }else
 			{
-				_selectedObjects.Remove(obj);
+				_selectedObjects.Remove(tool.gameObject);
 			}
-			statusScript.IsSelected=!statusScript.IsSelected;
-
-			
-		}else{
+			tool.IsSelected=!tool.IsSelected;
+        }else{
 			foreach (GameObject item in _selectedObjects)
 			{
 				item.GetComponent<BaseTool>().IsSelected=false;		
 			}
 			_selectedObjects.Clear();
-            _selectedObjects.Add(obj);
-            statusScript.IsSelected=true;
-		}
+            _selectedObjects.Add(tool.gameObject);
+            tool.IsSelected=true;
+            _uiManager.ShowProperties(tool);
+        }
 
-
-		//if (_selectedObjects.Count==1)
-		//{
-		//	_inspectorView.AssembleBtn.interactable=true;
-		//	_inspectorView.DessembleBtn.interactable=true;
-		//}else
-		//{
-		//	_inspectorView.AssembleBtn.interactable=false;
-		//	_inspectorView.DessembleBtn.interactable=false;
-			
-		//}
 	}
-
-
-
 }

@@ -4,27 +4,30 @@ using System.Collections.Generic;
 using TouchScript.Gestures;
 using UnityEngine;
 
-public abstract class BaseTool : MonoBehaviour {
+public abstract class BaseTool : MonoBehaviour
+{
 
-public event Action<GameObject> ClickedOnObject;
-	
-	[SerializeField]protected Connection[] Connections;
-	public string NominalSize;
-	public bool IsSelected, IsAssembeled, IsUnique;
+    public event Action<BaseTool> ClickedOnObject;
+    public Type ViewType ;
+    [SerializeField] protected Connection[] Connections;
+    public string NominalSize;
+    public bool IsSelected, IsAssembeled, IsUnique;
     public Node CenterNode { get; set; } = null;
 
 
     private PressGesture _press;
 
-	private void Awake(){
-		Connections=GetComponentsInChildren<Connection>();
+    protected virtual void Awake()
+    {
+        Connections = GetComponentsInChildren<Connection>();
         _press = GetComponent<PressGesture>();
     }
 
-	public Connection[] GetConnections(){
-		return Connections;
-	}
-	public abstract string HeadLossEq(string param, double flowRate);
+    public Connection[] GetConnections()
+    {
+        return Connections;
+    }
+    public abstract string HeadLossEq(string param, double flowRate);
 
 
     private void OnEnable()
@@ -38,6 +41,6 @@ public event Action<GameObject> ClickedOnObject;
     }
     private void _press_Pressed(object sender, EventArgs e)
     {
-        ClickedOnObject?.Invoke(this.gameObject);
+        ClickedOnObject?.Invoke(this);
     }
 }

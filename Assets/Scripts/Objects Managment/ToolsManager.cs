@@ -6,7 +6,7 @@ using UnityEngine;
 public class ToolsManager : MonoBehaviour
 {
     public event Action<Connection, Connection> OnToolConnected;
-    public event Action<GameObject> ClickedOnObject;
+    public event Action<BaseTool> ClickedOnObject;
 
     private List<Connection> _allConnections;
     private ToolFactory _factory;
@@ -150,7 +150,7 @@ public class ToolsManager : MonoBehaviour
         return false;
     }
 
-    protected virtual void OnClickedOnObject(GameObject obj)
+    protected virtual void OnClickedOnObject(BaseTool obj)
     {
         ClickedOnObject?.Invoke(obj);
     }
