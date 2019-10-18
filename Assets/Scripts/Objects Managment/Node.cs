@@ -25,6 +25,7 @@ public class Node
     }
 
     public void AddLink(Link lnk){
+        
         Links.Add(lnk);
         lnk.AddNode(this);
 

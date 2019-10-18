@@ -119,6 +119,7 @@
     <Compile Include="Assets\Scripts\SideBar management\PipePropertiesView.cs" />
     <Compile Include="Assets\Scripts\SideBar management\PropertiesView.cs" />
     <Compile Include="Assets\Scripts\SideBar management\SideBarView.cs" />
+    <Compile Include="Assets\Scripts\SideBar management\TeePropertiesView.cs" />
     <Compile Include="Assets\Scripts\SideBar management\ToolsBtnCtrl.cs" />
     <Compile Include="Assets\Scripts\SideBar management\TopBarView.cs" />
     <Compile Include="Assets\Scripts\SideBar management\UiManager.cs" />
@@ -252,32 +253,17 @@
     <Reference Include="com.unity.multiplayer-weaver.Editor">
       <HintPath>F:/Behzad/MPD/Library/ScriptAssemblies/com.unity.multiplayer-weaver.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.XR.LegacyInputHelpers">
-      <HintPath>F:/Behzad/MPD/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Rider.Editor">
-      <HintPath>F:/Behzad/MPD/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
       <HintPath>F:/Behzad/MPD/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
       <HintPath>F:/Behzad/MPD/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.SpatialTracking">
-      <HintPath>F:/Behzad/MPD/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.SpatialTracking">
-      <HintPath>F:/Behzad/MPD/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>F:/Behzad/MPD/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
       <HintPath>F:/Behzad/MPD/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.XR.LegacyInputHelpers">
-      <HintPath>F:/Behzad/MPD/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>F:/Behzad/MPD/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>

@@ -50,6 +50,6 @@ public class UiManager : MonoBehaviour
 
     public void ShowProperties(BaseTool tool)
     {
-        _sideBarView.InitPropertiesView(tool.ViewType);
+        _sideBarView.InitPropertiesView(tool);
     }
 }

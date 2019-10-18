@@ -53,6 +53,7 @@ MonoBehaviour:
   - {fileID: 806022615178511957}
   - {fileID: 806022615379835372}
   - {fileID: 8007309377181743264}
+  ToolName: 
   NominalSize: 
   IsSelected: 0
   IsAssembeled: 0
@@ -81,8 +82,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.47832692, y: 0.647701, z: 0.8374005}
+  m_Center: {x: 0.0033875108, y: 0.094849706, z: 0.39972362}
 --- !u!114 &-3698822974830456962
 MonoBehaviour:
   m_ObjectHideFlags: 0

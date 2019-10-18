@@ -17,18 +17,24 @@ public class InspectorView : MonoBehaviour
     private void Awake()
     {
         _propertiesViews = GetComponentsInChildren<PropertiesView>();
-        InitView(typeof(DefaultPropertiesView));
+        InitView(null);
     }
 
-    public void InitView(Type type)
+    public void InitView(BaseTool tool)
     {
-        
+        if (tool == null)
+        {
+            _currentView = _propertiesViews[0];
+            _propertiesViews[0].Show(tool);
+            return;
+        }
+
         for (int i = 0; i < _propertiesViews.Length; i++)
         {
-            if (_propertiesViews[i].GetType()==type)
+            if (_propertiesViews[i].GetType()==tool.ViewType)
             {
                 _currentView = _propertiesViews[i];
-                _propertiesViews[i].gameObject.SetActive(true);
+                _propertiesViews[i].Show(tool);
                 continue;
             }
             else
@@ -53,7 +59,6 @@ public class InspectorView : MonoBehaviour
 
     void OnDisable()
     {
-
         _assembleBtn.onClick.RemoveListener(OnAssembleBtnClicked);
         _unAssembleBtn.onClick.RemoveListener(OnUnAssembleBtnClicked);
         _calculateBtn.onClick.RemoveAllListeners();

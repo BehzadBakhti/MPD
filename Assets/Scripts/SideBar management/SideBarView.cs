@@ -20,7 +20,7 @@ public class SideBarView: MonoBehaviour
 
     public void Init(Dictionary<string, GameObject> toolsPrefabs)
     {
-       // print(_createPanel.gameObject.name);
+       
 
         _createPanel.Init(toolsPrefabs);
         _createPanel.CreateIsPressed += OnCreateIsPressed;
@@ -50,8 +50,8 @@ public class SideBarView: MonoBehaviour
         CreateIsPressed?.Invoke(obj);
     }
 
-    public void InitPropertiesView(Type toolViewType)
+    public void InitPropertiesView(BaseTool tool)
     {
-        _inspectorView.InitView(toolViewType);
+        _inspectorView.InitView(tool);
     }
 }

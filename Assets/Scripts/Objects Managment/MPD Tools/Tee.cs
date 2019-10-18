@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class Tee : BaseTool
 {
-  
+
+
+    protected override void Awake()
+    {
+        base.Awake();
+        ViewType = typeof(TeePropertiesView);
+    }
 
     public override string HeadLossEq(string param, double flowRate)
     {

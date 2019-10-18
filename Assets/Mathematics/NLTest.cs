@@ -14,14 +14,14 @@ using UnityEngine;
 //     /// <summary>
 //     /// Interaction logic for App.xaml
 //     /// </summary>
-    public  class NlTest : MonoBehaviour
+    public  class NLTest : MonoBehaviour
     {
 
 // 			// variables of the analytical system
 		public	string[] Variables = { "x", "y", "z" };
 			// analytical expressions of the system's equations
 		public	string[] Functions = { "x^2+y^2+z^2-1", // sphere
-								   "x^2+y^2-z",     // paraboloid along the z axis
+								   "x^2+y^2",     // paraboloid along the z axis
 								   "-x+2*y^2+z^2"   // paraboloid along the x axis
 								 };
 
@@ -56,7 +56,7 @@ void Start(){
 			// solving the system
 			_actual = _solver.Solve(system, X0, _options, ref Result);
 
-			Expected = new double[] { -4d/3d, -5d/3d }; // expected values
+			 // expected values
 			// printing solution result into console out
 			
         }

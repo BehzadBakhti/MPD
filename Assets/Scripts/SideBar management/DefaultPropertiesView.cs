@@ -10,6 +10,12 @@ public class DefaultPropertiesView : PropertiesView
     {
 
     }
+
+    public override void Show(BaseTool tool)
+    {
+
+    }
+
     public override void Apply()
     {
 
@@ -22,8 +28,4 @@ public class DefaultPropertiesView : PropertiesView
 
 
 
-    public override void Show()
-    {
-
-    }
 }

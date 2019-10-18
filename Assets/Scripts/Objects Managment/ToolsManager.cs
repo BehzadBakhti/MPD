@@ -52,13 +52,13 @@ public class ToolsManager : MonoBehaviour
     {
         OnToolConnected?.Invoke(conn1, conn2);
     }
-    Transform _refTrnsfrm;
+    Transform _refTransform;
 
  
 
     public GameObject CreateTool(string type, Camera activeCamera){
        // print(type);
-        if (CheckForExistance(type))
+        if (CheckForExistence(type))
         {
             print("It is not possible to have more than 1 instance of " + type + " in your MPD Assembly");
             return null;
@@ -75,22 +75,22 @@ public class ToolsManager : MonoBehaviour
 
     public void Assemble(BaseTool thisTool)
     {
-        GameObject thisObject = thisTool.gameObject;
+        var thisObject = thisTool.gameObject;
         GetAllConnections();
-        Connection[] toolConnections=thisTool.GetConnections();
+        var toolConnections=thisTool.GetConnections();
         Connection nearConnection=null,	desiredConnection=null;
        
         float dist=1000;	
 
-        foreach (Connection myConn in toolConnections)
+        foreach (var myConn in toolConnections)
         {
             if (myConn.IsConnected) continue;
 
-            foreach (Connection othersConn in _allConnections)
+            foreach (var othersConn in _allConnections)
             {
                 if (othersConn.IsConnected) continue;
 
-                float currDist=Vector3.Distance(myConn.transform.position, othersConn.transform.position);
+                var currDist=Vector3.Distance(myConn.transform.position, othersConn.transform.position);
                 if ((!(currDist < dist)) ||
                     (othersConn.GetComponentInParent<BaseTool>() == thisTool)) continue;
                 
@@ -102,19 +102,22 @@ public class ToolsManager : MonoBehaviour
 
         if (nearConnection != null)
         {
+            var emptyGo = new GameObject();
+            _refTransform = emptyGo.transform;
+            _refTransform.position= nearConnection.transform.position; 
+            _refTransform.rotation= nearConnection.transform.rotation;
+               _refTransform.Rotate(180f,0f,0f);
 
-            _refTrnsfrm=nearConnection.transform;
-               _refTrnsfrm.Rotate(180f,0f,0f);
+            var localPos= desiredConnection.transform.localPosition;
 
-            Vector3 localPos= desiredConnection.transform.localPosition;
-
-            Quaternion newConnRot=_refTrnsfrm.rotation* Quaternion.Inverse(desiredConnection.transform.rotation);
+            var newConnRot=_refTransform.rotation* Quaternion.Inverse(desiredConnection.transform.rotation);
             thisObject.transform.rotation *= newConnRot;
-            thisObject.transform.position=_refTrnsfrm.position;
+            thisObject.transform.position=_refTransform.position;
             thisObject.transform.Translate(-localPos);
+            Destroy(emptyGo);
         }
 
-        desiredConnection.Connect(nearConnection);
+        desiredConnection?.Connect(nearConnection);
     }
 
     public void UnAssemble(){
@@ -124,7 +127,7 @@ public class ToolsManager : MonoBehaviour
 
     public void GetToolsPrefabList()
     {
-        List<GameObject> prefabsList=new List<GameObject>();
+        var prefabsList=new List<GameObject>();
         prefabsList.AddRange(Resources.LoadAll<GameObject>("Prefabs/MPDTools"));
 
         foreach (var prefab in prefabsList)
@@ -135,17 +138,15 @@ public class ToolsManager : MonoBehaviour
     }
 
 
-    private bool CheckForExistance(string type)
+    private bool CheckForExistence(string type)
     {
-        if (MpdPrefabDictionary[type].GetComponent<BaseTool>().IsUnique)
+        if (!MpdPrefabDictionary[type].GetComponent<BaseTool>().IsUnique) return false;
+        foreach (var item in MpdToolsInAssembly)
         {
-            foreach (var item in MpdToolsInAssembly)
+            if (item.GetType().ToString() == type)
             {
-                if (item.GetType().ToString() == type)
-                {
-                    return true;
-                }    
-            }
+                return true;
+            }    
         }
         return false;
     }
