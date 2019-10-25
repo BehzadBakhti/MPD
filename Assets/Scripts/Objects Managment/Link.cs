@@ -6,26 +6,27 @@ using UnityEngine;
 public class Link :MonoBehaviour
 {
 
-    public string Param;
-    public double FlowRate;
+
+    public CalculationParams LinkData;
     public IPressureDropFunc PressureDrop; // dP= f(Q)
 
     public List<Node> Nodes { get; set; } = new List<Node>();
-    public string Equation;
+   
     public double Friction;
     public bool IsOpen= true;
 
 
-    void Start(){
-    
+    private void Awake(){
+    LinkData= new CalculationParams();
     }
 
-    public string GetEquation(){
+    public string GetEquation(float flowRate){
     
-        string fQ=GetComponentInParent<BaseTool>().HeadLossEq(Param, FlowRate);
-        Equation= Nodes[0].Param + "-" + Nodes[1].Param + "-" + fQ + "=0";
+        string fQ=GetComponentInParent<BaseTool>().HeadLossEq(LinkData.Param, flowRate);
+        var equation= Nodes[0].NodeData.Param + "-" + Nodes[1].NodeData.Param + "-" + fQ + "=0";
+        LinkData.Equation = equation;
 
-        return Equation;
+        return equation;
 
     }
 

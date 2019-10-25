@@ -6,21 +6,25 @@ using UnityEngine;
 public class Node 
 {
 
-    public string Param;
-    public double Head;
-    public string Equation="";
+
+    public CalculationParams NodeData;
     public List<Link> Links = new List<Link>();
+
+    public Node()
+    {
+        NodeData = new CalculationParams();
+    }
 
 
     public string GetEquation(){
 
-        foreach (Link link in Links)
+        foreach (var link in Links)
         {
-           Equation+=link.Param+"-"; 
+           NodeData.Equation+=link.LinkData.Param+"-"; 
         }
-        Equation+= "0=0";
+        NodeData.Equation += "0=0";
 
-        return Equation;
+        return NodeData.Equation;
 
     }
 

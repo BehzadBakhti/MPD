@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class Bop : BaseTool
 {
-
-
     void Start()
     {
         CenterNode = new Node();
-        foreach (Connection conn in Connections)
+        foreach (var conn in Connections)
         {
             CenterNode.Links.Add(conn.AttachedLink);
             conn.AttachedLink.AddNode(CenterNode);

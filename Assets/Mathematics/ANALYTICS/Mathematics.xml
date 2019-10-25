@@ -1932,7 +1932,7 @@
             Solution method.
             </summary>
             <param name="system"></param>
-            <param name="x0"></param>
+            <param name="initGuess"></param>
             <param name="opt"></param>
             <param name="x"></param>
             <returns></returns>
@@ -1947,7 +1947,7 @@
             Iteration.
             </summary>
             <param name="system"></param>
-            <param name="x0">Current x values</param>
+            <param name="initGuess">Current x values</param>
             <param name="x1">Next (calculated) x values</param>
             <returns></returns>
         </member>
@@ -1957,7 +1957,7 @@
             TODO: optimize the number of system values calculation per iteration.
             </summary>
             <param name="system"></param>
-            <param name="x0"></param>
+            <param name="initGuess"></param>
             <param name="opt"></param>
             <param name="x"></param>
             <returns></returns>
@@ -1977,7 +1977,7 @@
             Simple iteration x[i+1] = x[i] + s*F(x[i])
             </summary>
             <param name="system"></param>
-            <param name="x0"></param>
+            <param name="initGuess"></param>
             <param name="x1"></param>
             <returns></returns>
         </member>
@@ -2003,7 +2003,7 @@
             x[i+1] = x[i] - y[i]/J(x[i])
             </summary>
             <param name="system"></param>
-            <param name="x0"></param>
+            <param name="initGuess"></param>
             <param name="x1"></param>
             <returns></returns>
         </member>

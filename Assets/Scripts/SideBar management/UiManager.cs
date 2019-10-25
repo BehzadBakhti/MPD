@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class UiManager : MonoBehaviour
 
     private SideBarView _sideBarView;
     private TopBarView _topBarView;
+    private LeftSideBarView _leftSideBar;
 
     private void Awake()
     {
@@ -51,5 +53,27 @@ public class UiManager : MonoBehaviour
     public void ShowProperties(BaseTool tool)
     {
         _sideBarView.InitPropertiesView(tool);
+    }
+}
+
+public class LeftSideBarView :MonoBehaviour
+{
+    [SerializeField] private InputField _wellName, _mw, _viscosity;
+    [SerializeField] private Button _applyBtn, _cancelBtn;
+
+    private void Awake()
+    {
+        _applyBtn.onClick.AddListener(Apply);
+        _cancelBtn.onClick.AddListener(Cancel);
+    }
+
+    public void Apply()
+    {
+        Fluids.Density =double.Parse(_mw.text);
+    }
+
+    public void Cancel()
+    {
+
     }
 }

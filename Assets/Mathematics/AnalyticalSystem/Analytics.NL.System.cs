@@ -35,6 +35,7 @@ namespace Analytics.Nonlinear
             int l = variables.Length;
             for (int i = 0; i < l; i++)
             {
+                
                 if (!Translator.Add(variables[i], (double)0.0))
                 {
                     throw new InvalidNameException(variables[i]);

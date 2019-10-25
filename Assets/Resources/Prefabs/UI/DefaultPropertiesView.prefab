@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 266251012433126736}
   - component: {fileID: 266251012433126767}
   - component: {fileID: 1259398927404296112}
-  - component: {fileID: 7641929965076862423}
+  - component: {fileID: 1460136094}
   m_Layer: 5
   m_Name: DefaultPropertiesView
   m_TagString: Untagged
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 1
---- !u!114 &7641929965076862423
+--- !u!114 &1460136094
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -187,13 +187,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 266251012433126764}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc530f2824446bf48b2d44daf5ca65f7, type: 3}
+  m_Script: {fileID: 11500000, guid: 36fe4f0d153f8c74cb892cf7442317b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _toolName: {fileID: 0}
-  _od: {fileID: 0}
-  _id: {fileID: 0}
-  _isOpen: {fileID: 0}
 --- !u!1 &1853181881591683358
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ public class Rcd : BaseTool
         
             RcdNode.Links.Add(Connections[3].AttachedLink);
             Connections[3].AttachedLink.AddNode(RcdNode);
-            RcdNode.Param="h0";
+            RcdNode.NodeData.Param="h0";
  
     }
 
