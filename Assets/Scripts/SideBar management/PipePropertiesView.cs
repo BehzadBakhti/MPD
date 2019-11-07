@@ -26,10 +26,10 @@ public class PipePropertiesView : PropertiesView
 
     public override void Apply()
     {
-        _pipe.InnerDiameter = Convert.ToDouble(_id.text);
-        _pipe.Length = Convert.ToDouble(_length.text);
-        _pipe.OuterDiameter = Convert.ToDouble(_od.text);
-        _pipe.Roughness = Convert.ToDouble(_roughness.text);
+        _pipe.InnerDiameter = float.Parse(_id.text);
+        _pipe.Length = float.Parse(_length.text);
+        _pipe.OuterDiameter = float.Parse(_od.text);
+        _pipe.Roughness = float.Parse(_roughness.text);
 
     }
 

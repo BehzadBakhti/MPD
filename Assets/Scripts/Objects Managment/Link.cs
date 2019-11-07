@@ -3,32 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Link :MonoBehaviour
+public class Link : MonoBehaviour, INetworkElement
 {
 
 
-    public CalculationParams LinkData;
     public IPressureDropFunc PressureDrop; // dP= f(Q)
 
     public List<Node> Nodes { get; set; } = new List<Node>();
-   
-    public double Friction;
+    public CalculationParams ElementData { get ; set ; }
+
+    public float Friction;
     public bool IsOpen= true;
 
 
-    private void Awake(){
-    LinkData= new CalculationParams();
+    private void OnEnable(){
+        ElementData = new CalculationParams();
     }
 
-    public string GetEquation(float flowRate){
-    
-        string fQ=GetComponentInParent<BaseTool>().HeadLossEq(LinkData.Param, flowRate);
-        var equation= Nodes[0].NodeData.Param + "-" + Nodes[1].NodeData.Param + "-" + fQ + "=0";
-        LinkData.Equation = equation;
-
-        return equation;
-
-    }
 
     public void AddNode(Node n){
         Nodes.Add(n);
@@ -40,4 +31,22 @@ public class Link :MonoBehaviour
         return this.Nodes.Count >= 2;
     }
 
+    public  string GetEquation(float value)
+    {
+        print(ElementData.Param+" | "+value);
+        string fQ = GetComponentInParent<BaseTool>().HeadLossEq(ElementData.Param, value);
+        var equation = Nodes[0].ElementData.Param + "-" + Nodes[1].ElementData.Param + "-" + fQ + "=0";
+        ElementData.Equation= equation;
+
+        return equation;
+    }
+}
+
+
+public interface  INetworkElement 
+{
+     CalculationParams ElementData { get; set; }
+    
+
+    string GetEquation(float value);
 }

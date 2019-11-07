@@ -17,7 +17,7 @@ namespace Analytics.Tests
 
         static TestUtils()
         {
-            Precision = 1e-12;
+            Precision = 1e-5f;
         }
 
         private static bool IsBigPositive(double expected)
@@ -44,8 +44,8 @@ namespace Analytics.Tests
                 if (value > 0.0)
                 {
                     _precision = value;
-                    _bigpositive = 1.0 / _precision;
-                    _bignegative = -1.0 / _precision;
+                    _bigpositive = 1.0f / _precision;
+                    _bignegative = -1.0f / _precision;
                 }
                 else
                 {

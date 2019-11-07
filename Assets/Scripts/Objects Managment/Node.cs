@@ -3,28 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Node 
+public class Node :INetworkElement
 {
 
 
-    public CalculationParams NodeData;
+
     public List<Link> Links = new List<Link>();
+
+    public CalculationParams ElementData { get ;set; }
 
     public Node()
     {
-        NodeData = new CalculationParams();
+        ElementData = new CalculationParams();
     }
 
-
-    public string GetEquation(){
+    public string GetEquation(float value)
+    {
 
         foreach (var link in Links)
         {
-           NodeData.Equation+=link.LinkData.Param+"-"; 
+           ElementData.Equation+=link.ElementData.Param+"-"; 
         }
-        NodeData.Equation += "0=0";
+        ElementData.Equation += "0=0";
 
-        return NodeData.Equation;
+        return ElementData.Equation;
 
     }
 
@@ -40,5 +42,7 @@ public class Node
     {
         Links.Remove(lnk);
     }
+
+
 }
 

@@ -36,7 +36,7 @@ namespace Analytics.Nonlinear
             for (int i = 0; i < l; i++)
             {
                 
-                if (!Translator.Add(variables[i], (double)0.0))
+                if (!Translator.Add(variables[i], (float)0.0))
                 {
                     throw new InvalidNameException(variables[i]);
                 }
@@ -68,12 +68,12 @@ namespace Analytics.Nonlinear
 
                 Functions[i] = f[i];
                 Formulae[i] = Translator.BuildFormula(Functions[i]);
-                if (Formulae[i].ResultType != typeof(double))
+                if (Formulae[i].ResultType != typeof(float))
                 {
                     Type t = Formulae[i].ResultType;
                     Functions = null;
                     Formulae = null;
-                    throw new WrongArgumentException("Function must return real value.", typeof(double), t);
+                    throw new WrongArgumentException("Function must return real value.", typeof(float), t);
                 }
             }
 
@@ -118,9 +118,9 @@ namespace Analytics.Nonlinear
         /// </summary>
         /// <param name="i">Equation number</param>
         /// <returns></returns>
-        protected double Equation(int i)
+        protected float Equation(int i)
         {
-            return (double)Formulae[i].Calculate();
+            return (float)Formulae[i].Calculate();
         }
 
         /// <summary>
@@ -129,9 +129,9 @@ namespace Analytics.Nonlinear
         /// <param name="i">Equation number</param>
         /// <param name="j">Variable number</param>
         /// <returns></returns>
-        protected double Derivative(int i, int j)
+        protected float Derivative(int i, int j)
         {
-            return (double)Fderivatives[i,j].Calculate();
+            return (float)Fderivatives[i,j].Calculate();
         }
 
         /// <summary>

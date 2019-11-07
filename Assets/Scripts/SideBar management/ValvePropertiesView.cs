@@ -26,7 +26,7 @@ public class ValvePropertiesView : PropertiesView
 
     public override void Apply()
     {
-        _valve.InnerDiameter = Convert.ToDouble(_id.text);
+        _valve.InnerDiameter = float.Parse(_id.text);
         _valve.IsOpen = _isOpen.isOn;
         
     }

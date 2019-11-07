@@ -539,7 +539,7 @@
             <param name="v"></param>
             <returns>True, if added</returns>
         </member>
-        <member name="M:Analytics.Translator.Add(System.String,System.Double)">
+        <member name="M:Analytics.Translator.Add(System.String,System.float)">
             <summary>
             Adds standard Real variable
             </summary>
@@ -547,7 +547,7 @@
             <param name="value"></param>
             <returns>True, if added</returns>
         </member>
-        <member name="M:Analytics.Translator.Add(System.String,System.Double[])">
+        <member name="M:Analytics.Translator.Add(System.String,System.float[])">
             <summary>
             Adds standard Real Array variable
             </summary>
@@ -555,7 +555,7 @@
             <param name="value"></param>
             <returns>True, if added</returns>
         </member>
-        <member name="M:Analytics.Translator.Add(System.String,System.Double[0:,0:])">
+        <member name="M:Analytics.Translator.Add(System.String,System.float[0:,0:])">
             <summary>
             Adds standard Real Matrix variable
             </summary>
@@ -563,7 +563,7 @@
             <param name="value"></param>
             <returns>True, if added</returns>
         </member>
-        <member name="M:Analytics.Translator.Add(System.String,System.Double[0:,0:,0:])">
+        <member name="M:Analytics.Translator.Add(System.String,System.float[0:,0:,0:])">
             <summary>
             Adds standard Real Block variable
             </summary>
@@ -944,7 +944,7 @@
             <param name="r"></param>
             <returns></returns>
         </member>
-        <member name="M:Analytics.Utilities.CheckNonnegativeArgument(System.Double,System.String)">
+        <member name="M:Analytics.Utilities.CheckNonnegativeArgument(System.float,System.String)">
             <summary>
             Checks if the value is nonnegative.
             If not - throws exception.
@@ -952,7 +952,7 @@
             <param name="value"></param>
             <param name="operation"></param>
         </member>
-        <member name="M:Analytics.Utilities.CheckIntegerArgument(System.Double,System.String)">
+        <member name="M:Analytics.Utilities.CheckIntegerArgument(System.float,System.String)">
             <summary>
             Checks if the value is "integer".
             If not - throws exception.
@@ -2172,14 +2172,14 @@
             Parameter right
             </summary>
         </member>
-        <member name="F:Analytics.Symbols.LeftDoublequotation">
+        <member name="F:Analytics.Symbols.Leftfloatquotation">
             <summary>
-            Left double quotation
+            Left float quotation
             </summary>
         </member>
-        <member name="F:Analytics.Symbols.RightDoublequotation">
+        <member name="F:Analytics.Symbols.Rightfloatquotation">
             <summary>
-            Right double quotation
+            Right float quotation
             </summary>
         </member>
         <member name="F:Analytics.Symbols.LeftQuotation">
@@ -2202,14 +2202,14 @@
             Right triangle
             </summary>
         </member>
-        <member name="F:Analytics.Symbols.LeftDoubletrianglebracket">
+        <member name="F:Analytics.Symbols.Leftfloattrianglebracket">
             <summary>
-            Left double triangle
+            Left float triangle
             </summary>
         </member>
-        <member name="F:Analytics.Symbols.RightDoubletrianglebracket">
+        <member name="F:Analytics.Symbols.Rightfloattrianglebracket">
             <summary>
-            Right double triangle
+            Right float triangle
             </summary>
         </member>
         <member name="F:Analytics.Symbols.FunctionSign">
@@ -2477,7 +2477,7 @@
         </member>
         <member name="T:Analytics.Functions.BaseRealElementaryFunction">
             <summary>
-            Base abstract class for all ELEMENTARY functions of DOUBLE ARGUMENTS
+            Base abstract class for all ELEMENTARY functions of float ARGUMENTS
             </summary>
         </member>
         <member name="T:Analytics.Functions.BaseComplexElementaryFunction">
@@ -2488,12 +2488,12 @@
         <member name="T:Analytics.Functions.RealElementaryFunction">
             <summary>
             Base abstract class for all ELEMENTARY functions
-            of ONE DOUBLE argument and ZERO parameters (sin, ln, exp and so on).
+            of ONE float argument and ZERO parameters (sin, ln, exp and so on).
             </summary>
         </member>
-        <member name="M:Analytics.Functions.RealElementaryFunction.Func(System.Double)">
+        <member name="M:Analytics.Functions.RealElementaryFunction.Func(System.float)">
             <summary>
-            The calculation function of ONE DOUBLE arqument
+            The calculation function of ONE float arqument
             </summary>
             <param name="x"></param>
             <returns></returns>
@@ -2501,12 +2501,12 @@
         <member name="T:Analytics.Functions.RealParametricElementaryFunction">
             <summary>
             Base abstract class for all ELEMENTARY functions
-            of ONE DOUBLE argument and ONE DOUBLE parameter (logarithm of x to base y).
+            of ONE float argument and ONE float parameter (logarithm of x to base y).
             </summary>
         </member>
-        <member name="M:Analytics.Functions.RealParametricElementaryFunction.Func(System.Double,System.Double)">
+        <member name="M:Analytics.Functions.RealParametricElementaryFunction.Func(System.float,System.float)">
             <summary>
-            The calculation function of ONE DOUBLE parameter and ONE DOUBLE arqument
+            The calculation function of ONE float parameter and ONE float arqument
             </summary>
             <param name="parameter"></param>
             <param name="argument"></param>
@@ -2546,7 +2546,7 @@
         </member>
         <member name="T:Analytics.Functions.BaseRealSpecialFunction">
             <summary>
-            Base abstract class for all SPECIAL functions of DOUBLE ARGUMENTS
+            Base abstract class for all SPECIAL functions of float ARGUMENTS
             </summary>
         </member>
         <member name="T:Analytics.Functions.BaseComplexSpecialFunction">
@@ -2557,12 +2557,12 @@
         <member name="T:Analytics.Functions.RealSpecialFunction">
             <summary>
             Base abstract class for all SPECIAL functions
-            of ONE DOUBLE argument and ZERO parameters (abs, sgn and so on).
+            of ONE float argument and ZERO parameters (abs, sgn and so on).
             </summary>
         </member>
-        <member name="M:Analytics.Functions.RealSpecialFunction.Func(System.Double)">
+        <member name="M:Analytics.Functions.RealSpecialFunction.Func(System.float)">
             <summary>
-            The calculation function of ONE DOUBLE arqument
+            The calculation function of ONE float arqument
             </summary>
             <param name="x"></param>
             <returns></returns>
@@ -2583,7 +2583,7 @@
         <member name="T:Analytics.Functions.ComplexRealFunction">
             <summary>
             Base Abstract class for functions of ONE Complex argument
-            those return DOUBLE values.
+            those return float values.
             NOTE: This class is out of main function class hierarchy
                   and used to simplify programming.
             </summary>
@@ -2603,7 +2603,7 @@
                   and used to simplify programming.
             </summary>
         </member>
-        <member name="M:Analytics.Functions.ComplexRealParametricFunction.Func(System.Numerics.Complex,System.Double)">
+        <member name="M:Analytics.Functions.ComplexRealParametricFunction.Func(System.Numerics.Complex,System.float)">
             <summary>
             Calculation function
             </summary>
@@ -2619,7 +2619,7 @@
                   and used to simplify programming.
             </summary>
         </member>
-        <member name="M:Analytics.Functions.RealComplexParametricFunction.Func(System.Double,System.Numerics.Complex)">
+        <member name="M:Analytics.Functions.RealComplexParametricFunction.Func(System.float,System.Numerics.Complex)">
             <summary>
             Calculation function
             </summary>
@@ -2969,7 +2969,7 @@
         <member name="T:Analytics.Variables.RealVariable">
             <summary>
             The Standard Real variable
-            (contains Double value).
+            (contains float value).
             </summary>
         </member>
         <member name="M:Analytics.Variables.RealVariable.Default">
@@ -2978,7 +2978,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Analytics.Variables.RealVariable.#ctor(System.String,System.Double)">
+        <member name="M:Analytics.Variables.RealVariable.#ctor(System.String,System.float)">
             <summary>
             Constructor 
             </summary>
@@ -2994,7 +2994,7 @@
         <member name="T:Analytics.Variables.RealArrayVariable">
             <summary>
             The Standard Real Array variable
-            (contains Double array).
+            (contains float array).
             </summary>
         </member>
         <member name="M:Analytics.Variables.RealArrayVariable.Default">
@@ -3003,7 +3003,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Analytics.Variables.RealArrayVariable.#ctor(System.String,System.Double[])">
+        <member name="M:Analytics.Variables.RealArrayVariable.#ctor(System.String,System.float[])">
             <summary>
             Constructor 
             </summary>
@@ -3019,7 +3019,7 @@
         <member name="T:Analytics.Variables.RealMatrixVariable">
             <summary>
             The Standard Real Matrix variable
-            (contains Double matrix).
+            (contains float matrix).
             </summary>
         </member>
         <member name="M:Analytics.Variables.RealMatrixVariable.Default">
@@ -3028,7 +3028,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Analytics.Variables.RealMatrixVariable.#ctor(System.String,System.Double[0:,0:])">
+        <member name="M:Analytics.Variables.RealMatrixVariable.#ctor(System.String,System.float[0:,0:])">
             <summary>
             Constructor 
             </summary>
@@ -3044,7 +3044,7 @@
         <member name="T:Analytics.Variables.RealBlockVariable">
             <summary>
             The Standard Real Block variable
-            (contains Double block).
+            (contains float block).
             </summary>
         </member>
         <member name="M:Analytics.Variables.RealBlockVariable.Default">
@@ -3053,7 +3053,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Analytics.Variables.RealBlockVariable.#ctor(System.String,System.Double[0:,0:,0:])">
+        <member name="M:Analytics.Variables.RealBlockVariable.#ctor(System.String,System.float[0:,0:,0:])">
             <summary>
             Constructor 
             </summary>
@@ -3176,7 +3176,7 @@
             Contains reference to an Indexed Variable
             and indexes formulae. Result is the data item with the current index values.
             NOTE: Index formulae MUST return values that can be converted to integer values.
-                  Now it is Double only. AND the calculated values MUST be with fraction==.000
+                  Now it is float only. AND the calculated values MUST be with fraction==.000
                   (that is the value must be almost integer - see Constants.RealIndexPrecision).
             NOTE: Slicing implemented for indexed data that supports it.
             </summary>
@@ -3839,7 +3839,7 @@
             <param name="indexes"></param>
             <returns>True, if valid format</returns>
         </member>
-        <member name="M:Analytics.Syntactic.Parser.IsReal(System.String,System.Globalization.CultureInfo,System.Double@)">
+        <member name="M:Analytics.Syntactic.Parser.IsReal(System.String,System.Globalization.CultureInfo,System.float@)">
             <summary>
             Checks if the string represents a Real value.
             NOTE: Automatically detects Infinity, Pi, E (see Symbols class).
@@ -3849,7 +3849,7 @@
             <param name="x"></param>
             <returns>True, if valid</returns>
         </member>
-        <member name="M:Analytics.Syntactic.Parser.IsReal(System.String,System.Double@)">
+        <member name="M:Analytics.Syntactic.Parser.IsReal(System.String,System.float@)">
             <summary>
             Checks if the string represents a Real value (for CURRENT CULTURE)
             </summary>
@@ -3864,7 +3864,7 @@
             <param name="value"></param>
             <returns>True, if valid</returns>
         </member>
-        <member name="M:Analytics.Syntactic.Parser.IsRealConstant(System.Double,System.String@)">
+        <member name="M:Analytics.Syntactic.Parser.IsRealConstant(System.float,System.String@)">
             <summary>
             Checks if the real number is a standard constant (Pi, e, ...).
             WARNING: Detection algorithm is based on comparison with the Constants.RealConstantPrecision value. 

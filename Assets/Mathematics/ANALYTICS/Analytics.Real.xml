@@ -152,37 +152,37 @@
         </member>
         <member name="T:Analytics.Operators.RealAdd">
             <summary>
-            Double + Double = Double
+            float + float = float
             </summary>
         </member>
         <member name="T:Analytics.Operators.RealSubtract">
             <summary>
-            Double - Double = Double
+            float - float = float
             </summary>
         </member>
         <member name="T:Analytics.Operators.RealMultiply">
             <summary>
-            Double * Double = Double
+            float * float = float
             </summary>
         </member>
         <member name="T:Analytics.Operators.RealDivide">
             <summary>
-            Double / Double = Double
+            float / float = float
             </summary>
         </member>
         <member name="T:Analytics.Operators.RealPower">
             <summary>
-            Double ^ Double = Double
+            float ^ float = float
             </summary>
         </member>
         <member name="T:Analytics.Operators.RealMinus">
             <summary>
-            - Double = Double
+            - float = float
             </summary>
         </member>
         <member name="T:Analytics.Operators.RealFactorial">
             <summary>
-            Double! = Double
+            float! = float
             NOTE: the operand value must have nonnegative 
             (almost) integer value (see IntegerValuePrecision constant).
             WARNING: for large operand values the precision lost is possible.
@@ -190,17 +190,17 @@
         </member>
         <member name="T:Analytics.Operators.RealAbsolute">
             <summary>
-            |Double| = Double
+            |float| = float
             </summary>
         </member>
         <member name="T:Analytics.Operators.RealSquareRoot">
             <summary>
-            √(Double) = Double
+            √(float) = float
             </summary>   
         </member>
         <member name="T:Analytics.Operators.RealApproximatelyOperator">
             <summary>
-            Double ≈ Double  = Boolean
+            float ≈ float  = Boolean
             </summary>
         </member>
         <member name="T:Analytics.Functions.SquareRoot">

@@ -69,7 +69,7 @@ public class LeftSideBarView :MonoBehaviour
 
     public void Apply()
     {
-        Fluids.Density =double.Parse(_mw.text);
+        Fluids.Density =float.Parse(_mw.text);
     }
 
     public void Cancel()

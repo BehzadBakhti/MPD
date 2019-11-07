@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Analytics.Nonlinear;
 using Mathematics.NL;
@@ -14,42 +13,40 @@ public class NodalNetwork : MonoBehaviour
     public HashSet<Node> NetworkNodes;
     public HashSet<Link> NetworkLinks;
 
-    public Dictionary<string, CalculationParams> SolverInputData;
+    public List<INetworkElement> SolverInputData;
 
     [SerializeField] private NlEquationSolver _nlSolver;
 
 
     [SerializeField] private int _nodeCount = 0, _linkCount = 0;
 
-   
+
     [SerializeField] private List<string> _allVariables;
     [SerializeField] private List<string> _allEquations;
-    [SerializeField] private List<double> _initGuess;
+    [SerializeField] private List<float> _initGuess;
 
     private void Awake()
     {
         NetworkNodes = new HashSet<Node>();
         NetworkLinks = new HashSet<Link>();
-        SolverInputData= new Dictionary<string, CalculationParams>();
+        SolverInputData = new List<INetworkElement>();
 
     }
-
-    internal void Init(List<BaseTool> initialTools)
+    private Dictionary<string, float> initialCondition;
+   
+    public void Init(List<BaseTool> initialTools)
     {
         foreach (var tool in initialTools)
         {
             if (tool.CenterNode == null) continue;
-            tool.CenterNode.NodeData.Param = "h" + _nodeCount;
+            // tool.CenterNode.NodeData.Param = "h" + _nodeCount;
             AddNode(tool.CenterNode);
-
         }
-
     }
 
     public void CreateNode(Connection conn1, Connection conn2)
     {
         var nd = new Node();
-
         nd.AddLink(conn1.AttachedLink);
         nd.AddLink(conn2.AttachedLink);
         AddNode(nd);
@@ -62,7 +59,7 @@ public class NodalNetwork : MonoBehaviour
         var isNewNode = NetworkNodes.Add(nd);
         if (!isNewNode) return;
 
-        nd.NodeData.Param = "h" + _nodeCount;
+        nd.ElementData.Param = "h" + _nodeCount;
         if (_nodeCount == 0) _defaultNode = nd;
         _nodeCount++;
         foreach (var lnk in nd.Links)
@@ -70,15 +67,13 @@ public class NodalNetwork : MonoBehaviour
             var isNewLink = NetworkLinks.Add(lnk);
             if (!isNewLink) continue;
 
-            lnk.LinkData.Param = "q" + _linkCount;
+            lnk.ElementData.Param = "q" + _linkCount;
             _linkCount++;
             foreach (var lnkNode in lnk.Nodes)
             {
                 AddNode(lnkNode);
             }
-
         }
-
     }
 
     public void RemoveLink(Link lnk)
@@ -94,37 +89,14 @@ public class NodalNetwork : MonoBehaviour
     }
 
 
-    private void GetParametersTree(Node rootNode)
-    {
-        if (SolverInputData.ContainsKey(rootNode.NodeData.Param)) return;
-
-        SolverInputData.Add(rootNode.NodeData.Param, rootNode.NodeData);
-
-    
-        foreach (var lnk in rootNode.Links)
-        {
-            if (SolverInputData.ContainsKey(lnk.LinkData.Param)) continue;
-            SolverInputData.Add(lnk.LinkData.Param, lnk.LinkData);
-            foreach (var node in lnk.Nodes)
-            {
-                if (node == rootNode) continue;
-                GetEquationTree(node);
-            }
-        }
-    }
-
-
     private void GetEquationTree(Node rootNode)
     {
-        if (SolverInputData.ContainsKey(rootNode.NodeData.Param)) return;
-
-        SolverInputData.Add(rootNode.NodeData.Param, rootNode.NodeData);
-
-
+        if (SolverInputData.Contains(rootNode)) return;
+        SolverInputData.Add(rootNode);
         foreach (var lnk in rootNode.Links)
         {
-            if (SolverInputData.ContainsKey(lnk.LinkData.Param)) continue;
-            SolverInputData.Add(lnk.LinkData.Param, lnk.LinkData);
+            if (SolverInputData.Contains(lnk)) continue;
+            SolverInputData.Add(lnk);
             foreach (var node in lnk.Nodes)
             {
                 if (node == rootNode) continue;
@@ -133,32 +105,39 @@ public class NodalNetwork : MonoBehaviour
         }
     }
 
-
-
-    public void EqMatrix()
+    public void CalculateHeads()
     {
         ValidateLinks();
+        SolverInputData.Clear();
         GetEquationTree(_defaultNode);
+        var initGuess = new List<float>();
+        float[] results= new float[SolverInputData.Count];
+        foreach (var item in SolverInputData)
+        {
+       
+            float value = item.ElementData.Param.Contains("h") ? 0 : 100;
+            initGuess.Add(value);// should be change with the Initial value of flowrate
+            _allEquations.Add(item.GetEquation(value));
+            _allVariables.Add(item.ElementData.Param);
+        }
 
-        //foreach (var eq in LinkParams)
-        //{
-        //    _allEquations.Add(eq.Value);
-        //}
-
-        //foreach (var eq in NodeParams)
-        //{
-        //    _allEquations.Add(eq.Value);
-        //}
-
-
-        var initGuess=new double[_allEquations.Count];
-
-        _nlSolver= new NlEquationSolver(_allVariables.ToArray(),_allEquations.ToArray(), initGuess);
-        _nlSolver.Solve();
-
+        while (!MPDUtility.CompareArrays(results, initGuess.ToArray(), 0.1f)){
+         
+            _nlSolver = new NlEquationSolver(_allVariables.ToArray(), _allEquations.ToArray(), initGuess.ToArray());
+            results= _nlSolver.Solve();
+            for (int i = 0; i < SolverInputData.Count; i++)
+            {   
+                _allEquations.Add(SolverInputData[i].GetEquation(results[i]));
+                _allVariables.Add(SolverInputData[i].ElementData.Param);
+            }
+        }
+        foreach (var item in initGuess)
+        {
+            print(item);
+        }
+        
     }
-
-
+   
     private void ValidateLinks()
     {
         foreach (var lnk in NetworkLinks)
@@ -172,25 +151,28 @@ public class NodalNetwork : MonoBehaviour
 
     void CompleteNetwork(Link lnk)
     {
-        var lastNode = new Node { NodeData= new CalculationParams("h_out", "", 0) };
+        var lastNode = new Node { ElementData = new CalculationParams { Param="h_out"} };
         lnk.AddNode(lastNode);
     }
 
- 
+
+  
 }
 
-[Serializable]
-public struct CalculationParams
+public static class MPDUtility
 {
-
-    public string Param { get; set; }
-    public string Equation { get; set; }
-    public double Value { get; set; }
-
-    public CalculationParams(string param, string equation, double value)
+    public static bool CompareArrays(float[] arr1, float[] arr2, float epsilon)
     {
-        Param = param;
-        Equation = equation;
-        Value = value;
+        if(arr1.Length!=arr2.Length)
+        return false;
+
+        float total = 0;
+        for (int i = 0; i < arr1.Length; i++)
+        {
+            total += Mathf.Abs(arr1[i] - arr2[i]);
+        }
+        if (total < epsilon) return true;
+
+        return false;
     }
 }

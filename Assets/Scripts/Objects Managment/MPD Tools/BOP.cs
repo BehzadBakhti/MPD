@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bop : BaseTool
+public class BOP: BaseTool
 {
     void Start()
     {
@@ -14,7 +14,7 @@ public class Bop : BaseTool
         }
     }
 
-    public override string HeadLossEq(string param, double flowRate)
+    public override string HeadLossEq(string param, float flowRate)
     {
         return "0";
     }

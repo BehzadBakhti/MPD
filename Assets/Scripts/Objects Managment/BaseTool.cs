@@ -27,7 +27,7 @@ public abstract class BaseTool : MonoBehaviour
     {
         return Connections;
     }
-    public abstract string HeadLossEq(string param, double flowRate);
+    public abstract string HeadLossEq(string param, float flowRate);
 
 
     private void OnEnable()

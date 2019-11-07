@@ -10,11 +10,11 @@ public class Rcd : BaseTool
         
             RcdNode.Links.Add(Connections[3].AttachedLink);
             Connections[3].AttachedLink.AddNode(RcdNode);
-            RcdNode.NodeData.Param="h0";
+            RcdNode.ElementData.Param="h0";
  
     }
 
-    public override string HeadLossEq(string param, double flowRate)
+    public override string HeadLossEq(string param, float flowRate)
     {
        return "0" ;
     }

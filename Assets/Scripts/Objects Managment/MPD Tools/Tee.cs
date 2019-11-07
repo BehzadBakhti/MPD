@@ -12,7 +12,7 @@ public class Tee : BaseTool
         ViewType = typeof(TeePropertiesView);
     }
 
-    public override string HeadLossEq(string param, double flowRate)
+    public override string HeadLossEq(string param, float flowRate)
     {
         return "0";
     }

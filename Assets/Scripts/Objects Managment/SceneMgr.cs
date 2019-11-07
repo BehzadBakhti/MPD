@@ -32,7 +32,7 @@ public class SceneMgr : MonoBehaviour {
 
     private void _uiManager_CalculateBtnClicked(object sender, System.EventArgs e)
     {
-        _nodalNetwork.EqMatrix();
+        _nodalNetwork.CalculateHeads();
     }
 
     private void _uiManager_UnAssembleBtnClicked(object sender, System.EventArgs e)

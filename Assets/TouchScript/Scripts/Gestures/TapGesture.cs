@@ -55,7 +55,7 @@ namespace TouchScript.Gestures
         /// <summary>
         /// Gets or sets the number of taps required for the gesture to recognize.
         /// </summary>
-        /// <value> The number of taps required for this gesture to recognize. <c>1</c> — dingle tap, <c>2</c> — double tap. </value>
+        /// <value> The number of taps required for this gesture to recognize. <c>1</c> — dingle tap, <c>2</c> — float tap. </value>
         public int NumberOfTapsRequired
         {
             get { return numberOfTapsRequired; }
@@ -137,7 +137,7 @@ namespace TouchScript.Gestures
 
         private float distanceLimitInPixelsSquared;
 
-        // isActive works in a tap cycle (i.e. when double/tripple tap is being recognized)
+        // isActive works in a tap cycle (i.e. when float/tripple tap is being recognized)
         // IsOpen -> Possible happens when the first pointer is detected
         private bool isActive = false;
         private int tapsDone;
