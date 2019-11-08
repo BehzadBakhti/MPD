@@ -6,13 +6,20 @@ using UnityEngine.UI;
 
 public class InspectorView : MonoBehaviour
 {
-    public event EventHandler AssembleBtnClicked;
-    public event EventHandler UnAssembleBtnClicked;
-    public event EventHandler CalculateBtnClicked;
+    public event Action AssembleBtnClicked;
+    public event Action UnAssembleBtnClicked;
+    public event Action CalculateBtnClicked;
+    public event Action ApplyBtnClicked;
+    public event Action CancelBtnClicked;
+
     private PropertiesView[] _propertiesViews;
     private PropertiesView _currentView;
    
-	[SerializeField] private Button _assembleBtn, _unAssembleBtn, _calculateBtn;
+	[SerializeField] private Button _assembleBtn;
+    [SerializeField] private Button _unAssembleBtn;
+    [SerializeField] private Button _calculateBtn;
+    [SerializeField] private Button _applyBtn;
+    [SerializeField] private Button _cancelBtn;
 
     private void Awake()
     {
@@ -25,24 +32,23 @@ public class InspectorView : MonoBehaviour
         if (tool == null)
         {
             _currentView = _propertiesViews[0];
-            _propertiesViews[0].Show(tool);
+            _propertiesViews[0].Show(null);
             return;
         }
 
-        for (int i = 0; i < _propertiesViews.Length; i++)
+        foreach (var view in _propertiesViews)
         {
-            if (_propertiesViews[i].GetType()==tool.ViewType)
+            if (view.GetType()==tool.ViewType)
             {
-                _currentView = _propertiesViews[i];
-                _propertiesViews[i].Show(tool);
+                _currentView = view;
+                view.Show(tool);
                 continue;
             }
             else
             {
-                _propertiesViews[i].gameObject.SetActive(false);
+                view.gameObject.SetActive(false);
             }
         }
-        
     }
 
     void OnEnable () {
@@ -50,11 +56,13 @@ public class InspectorView : MonoBehaviour
         _assembleBtn.onClick.AddListener(OnAssembleBtnClicked);
         _unAssembleBtn.onClick.AddListener(OnUnAssembleBtnClicked);
         _calculateBtn.onClick.AddListener(OnCalculateBtnClicked);
+        _applyBtn.onClick.AddListener(OnApplyBtnClicked);
+        _cancelBtn.onClick.AddListener(OnCancelBtnClicked);
     }
 
     private void OnCalculateBtnClicked()
     {
-        CalculateBtnClicked?.Invoke(this, EventArgs.Empty);
+        CalculateBtnClicked?.Invoke();
     }
 
     void OnDisable()
@@ -62,17 +70,30 @@ public class InspectorView : MonoBehaviour
         _assembleBtn.onClick.RemoveListener(OnAssembleBtnClicked);
         _unAssembleBtn.onClick.RemoveListener(OnUnAssembleBtnClicked);
         _calculateBtn.onClick.RemoveAllListeners();
+        _applyBtn.onClick.RemoveAllListeners();
+        _cancelBtn.onClick.RemoveAllListeners();
     }
 
     protected virtual void OnAssembleBtnClicked()
     {
-        AssembleBtnClicked?.Invoke(this, EventArgs.Empty);
+        AssembleBtnClicked?.Invoke();
     }
 
     protected virtual void OnUnAssembleBtnClicked()
     {
-        UnAssembleBtnClicked?.Invoke(this, EventArgs.Empty);
+        UnAssembleBtnClicked?.Invoke();
     }
 
 
+    protected virtual void OnApplyBtnClicked()
+    {
+        _currentView.Apply();
+        ApplyBtnClicked?.Invoke();
+    }
+
+    protected virtual void OnCancelBtnClicked()
+    {
+        _currentView.Cancel();
+        CancelBtnClicked?.Invoke();
+    }
 }

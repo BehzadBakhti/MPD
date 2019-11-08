@@ -33,9 +33,9 @@ public class Link : MonoBehaviour, INetworkElement
 
     public  string GetEquation(float value)
     {
-        print(ElementData.Param+" | "+value);
-        string fQ = GetComponentInParent<BaseTool>().HeadLossEq(ElementData.Param, value);
-        var equation = Nodes[0].ElementData.Param + "-" + Nodes[1].ElementData.Param + "-" + fQ + "=0";
+       // print(ElementData.Param+" | "+value);
+        var fQ = GetComponentInParent<BaseTool>().HeadLossEq(ElementData.Param, value);
+        var equation = Nodes[0].ElementData.Param + "-" + Nodes[1].ElementData.Param + "-" + fQ ;
         ElementData.Equation= equation;
 
         return equation;

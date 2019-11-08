@@ -5,9 +5,11 @@ using UnityEngine;
 public class SideBarView: MonoBehaviour
 {
     public event Action<string> CreateIsPressed;
-    public event EventHandler AssembleBtnClicked;
-    public event EventHandler UnAssembleBtnClicked;
-    public event EventHandler CalculateBtnClicked;
+    public event Action AssembleBtnClicked;
+    public event Action UnAssembleBtnClicked;
+    public event Action CalculateBtnClicked;
+    public event Action ApplyBtnClicked;
+    public event Action CancelBtnClicked;
 
     private InspectorView _inspectorView;
     private CreatePanelView _createPanel;
@@ -28,21 +30,23 @@ public class SideBarView: MonoBehaviour
         _inspectorView.AssembleBtnClicked += _inspectorView_AssembleBtnClicked;
         _inspectorView.UnAssembleBtnClicked += _inspectorView_UnAssembleBtnClicked;
         _inspectorView.CalculateBtnClicked += _inspectorView_CalculateBtnClicked;
+        _inspectorView.ApplyBtnClicked += OnApplyBtnClicked;
+        _inspectorView.CancelBtnClicked += OnCancelBtnClicked;
     }
 
-    private void _inspectorView_CalculateBtnClicked(object sender, EventArgs e)
+    private void _inspectorView_CalculateBtnClicked()
     {
-        CalculateBtnClicked?.Invoke(sender, e);
+        CalculateBtnClicked?.Invoke();
     }
 
-    private void _inspectorView_UnAssembleBtnClicked(object sender, EventArgs e)
+    private void _inspectorView_UnAssembleBtnClicked()
     {
-        UnAssembleBtnClicked?.Invoke(this, EventArgs.Empty);
+        UnAssembleBtnClicked?.Invoke();
     }
 
-    private void _inspectorView_AssembleBtnClicked(object sender, EventArgs e)
+    private void _inspectorView_AssembleBtnClicked()
     {
-        AssembleBtnClicked?.Invoke(this, EventArgs.Empty);
+        AssembleBtnClicked?.Invoke();
     }
 
     protected virtual void OnCreateIsPressed(string obj)
@@ -54,4 +58,16 @@ public class SideBarView: MonoBehaviour
     {
         _inspectorView.InitView(tool);
     }
+
+    protected virtual void OnApplyBtnClicked()
+    {
+        ApplyBtnClicked?.Invoke();
+    }
+
+    protected virtual void OnCancelBtnClicked()
+    {
+        CancelBtnClicked?.Invoke();
+    }
 }
+
+

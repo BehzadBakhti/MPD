@@ -2,14 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour
 {
+    //public event Action ApplyBtnClicked;
     public event Action<string> CreateIsPressed;
-    public event EventHandler AssembleBtnClicked;
-    public event EventHandler UnAssembleBtnClicked;
-    public event EventHandler CalculateBtnClicked;
+    public event Action AssembleBtnClicked;
+    public event Action UnAssembleBtnClicked;
+    public event Action CalculateBtnClicked;
+    public event Action ApplyBtnClicked;
+    public event Action CancelBtnClicked;
 
     private SideBarView _sideBarView;
     private TopBarView _topBarView;
@@ -19,30 +21,37 @@ public class UiManager : MonoBehaviour
     {
         _sideBarView = GetComponentInChildren<SideBarView>();
         _topBarView = GetComponentInChildren<TopBarView>();
+        _leftSideBar = GetComponentInChildren<LeftSideBarView>();
     }
 
-    public void Init(Dictionary<string, GameObject> toolsPrefabs)
+    public void Init(Dictionary<string, GameObject> toolsPrefabs, MpdData data)
     {
         _sideBarView.Init(toolsPrefabs);
+        _leftSideBar.Init(data);
+       // _leftSideBar.ApplyBtnClicked += () => ApplyBtnClicked?.Invoke();
+
+
         _sideBarView.CreateIsPressed += OnCreateIsPressed;
         _sideBarView.AssembleBtnClicked += _sideBarView_AssembleBtnClicked;
         _sideBarView.UnAssembleBtnClicked += _sideBarView_UnAssembleBtnClicked;
         _sideBarView.CalculateBtnClicked += _sideBarView_CalculateBtnClicked;
+        _sideBarView.ApplyBtnClicked += OnApplyBtnClicked;
+        _sideBarView.CancelBtnClicked += OnCancelBtnClicked;
     }
 
-    private void _sideBarView_CalculateBtnClicked(object sender, EventArgs e)
+    private void _sideBarView_CalculateBtnClicked()
     {
-        CalculateBtnClicked?.Invoke(sender, e);
+        CalculateBtnClicked?.Invoke();
     }
 
-    private void _sideBarView_UnAssembleBtnClicked(object sender, EventArgs e)
+    private void _sideBarView_UnAssembleBtnClicked()
     {
-        UnAssembleBtnClicked?.Invoke(this, EventArgs.Empty);
+        UnAssembleBtnClicked?.Invoke();
     }
 
-    private void _sideBarView_AssembleBtnClicked(object sender, EventArgs e)
+    private void _sideBarView_AssembleBtnClicked()
     {
-        AssembleBtnClicked?.Invoke(this, EventArgs.Empty);
+        AssembleBtnClicked?.Invoke();
     }
 
     protected virtual void OnCreateIsPressed(string obj)
@@ -54,26 +63,14 @@ public class UiManager : MonoBehaviour
     {
         _sideBarView.InitPropertiesView(tool);
     }
-}
 
-public class LeftSideBarView :MonoBehaviour
-{
-    [SerializeField] private InputField _wellName, _mw, _viscosity;
-    [SerializeField] private Button _applyBtn, _cancelBtn;
-
-    private void Awake()
+    protected virtual void OnApplyBtnClicked()
     {
-        _applyBtn.onClick.AddListener(Apply);
-        _cancelBtn.onClick.AddListener(Cancel);
+        ApplyBtnClicked?.Invoke();
     }
 
-    public void Apply()
+    protected virtual void OnCancelBtnClicked()
     {
-        Fluids.Density =float.Parse(_mw.text);
-    }
-
-    public void Cancel()
-    {
-
+        CancelBtnClicked?.Invoke();
     }
 }

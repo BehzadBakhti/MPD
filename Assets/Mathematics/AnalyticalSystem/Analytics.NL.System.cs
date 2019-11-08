@@ -6,6 +6,7 @@ using Analytics;
 using Mathematics.NL;
 using Analytics.Formulae;
 using Analytics.Syntactic;
+using UnityEngine;
 
 namespace Analytics.Nonlinear
 {
@@ -52,12 +53,13 @@ namespace Analytics.Nonlinear
         /// <returns></returns>
         protected bool AssignFunctions(string[] f)
         {
+       
             if (f == null || f.Length == 0) return false;
 
-            int l = f.Length;
+            var l = f.Length;
             Functions = new string[l];
             Formulae = new Formula[l];
-            for (int i = 0; i < l; i++)
+            for (var i = 0; i < l; i++)
             {
                 if (!Translator.CheckSyntax(f[i]))
                 {
@@ -67,14 +69,14 @@ namespace Analytics.Nonlinear
                 }
 
                 Functions[i] = f[i];
+                
                 Formulae[i] = Translator.BuildFormula(Functions[i]);
-                if (Formulae[i].ResultType != typeof(float))
-                {
-                    Type t = Formulae[i].ResultType;
-                    Functions = null;
-                    Formulae = null;
-                    throw new WrongArgumentException("Function must return real value.", typeof(float), t);
-                }
+
+                if (Formulae[i].ResultType == typeof(double)) continue;
+                var t = Formulae[i].ResultType;
+                Functions = null;
+                Formulae = null;
+                throw new WrongArgumentException("Function must return real value.", typeof(float), t);
             }
 
 			Dfunctions = new string[l, l];

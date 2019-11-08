@@ -20,11 +20,12 @@ public class Node :INetworkElement
     public string GetEquation(float value)
     {
 
+        ElementData.Equation = "";
         foreach (var link in Links)
         {
            ElementData.Equation+=link.ElementData.Param+"-"; 
         }
-        ElementData.Equation += "0=0";
+        ElementData.Equation += "0";
 
         return ElementData.Equation;
 

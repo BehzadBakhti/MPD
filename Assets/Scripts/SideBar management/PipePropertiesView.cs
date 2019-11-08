@@ -21,11 +21,16 @@ public class PipePropertiesView : PropertiesView
     {
         _pipe = tool as Pipe;
         _toolName.text = _pipe?.ToolName;
-        _od.text = _pipe?.InnerDiameter.ToString();
+        _od.text = _pipe?.OuterDiameter.ToString();
+        _roughness.text = _pipe?.Roughness.ToString();
+        _id.text = _pipe?.InnerDiameter.ToString();
+        _length.text = _pipe?.Length.ToString();
+ 
     }
 
     public override void Apply()
     {
+      //  print("Hello");
         _pipe.InnerDiameter = float.Parse(_id.text);
         _pipe.Length = float.Parse(_length.text);
         _pipe.OuterDiameter = float.Parse(_od.text);
@@ -35,7 +40,7 @@ public class PipePropertiesView : PropertiesView
 
     public override void Cancel()
     {
-
+        print("bye");
     }
 
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BOP: BaseTool
 {
-    void Start()
+    private void Start()
     {
         CenterNode = new Node();
         foreach (var conn in Connections)
@@ -16,7 +16,7 @@ public class BOP: BaseTool
 
     public override string HeadLossEq(string param, float flowRate)
     {
-        return "0";
+        return "1";
     }
 }
 

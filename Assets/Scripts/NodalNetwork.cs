@@ -12,6 +12,7 @@ public class NodalNetwork : MonoBehaviour
     private Node _defaultNode = new Node();
     public HashSet<Node> NetworkNodes;
     public HashSet<Link> NetworkLinks;
+    private MpdData _data;
 
     public List<INetworkElement> SolverInputData;
 
@@ -20,10 +21,9 @@ public class NodalNetwork : MonoBehaviour
 
     [SerializeField] private int _nodeCount = 0, _linkCount = 0;
 
-
     [SerializeField] private List<string> _allVariables;
     [SerializeField] private List<string> _allEquations;
-    [SerializeField] private List<float> _initGuess;
+    [SerializeField] private float[] _initGuess;
 
     private void Awake()
     {
@@ -32,10 +32,11 @@ public class NodalNetwork : MonoBehaviour
         SolverInputData = new List<INetworkElement>();
 
     }
-    private Dictionary<string, float> initialCondition;
+    private Dictionary<string, float> _initialCondition;
    
-    public void Init(List<BaseTool> initialTools)
+    public void Init(List<BaseTool> initialTools, MpdData data)
     {
+        _data = data;
         foreach (var tool in initialTools)
         {
             if (tool.CenterNode == null) continue;
@@ -100,6 +101,7 @@ public class NodalNetwork : MonoBehaviour
             foreach (var node in lnk.Nodes)
             {
                 if (node == rootNode) continue;
+                if(node.ElementData.Param=="0") continue;
                 GetEquationTree(node);
             }
         }
@@ -107,35 +109,40 @@ public class NodalNetwork : MonoBehaviour
 
     public void CalculateHeads()
     {
-        ValidateLinks();
+        _allEquations=new List<string>();
+        _allVariables= new List<string>();
         SolverInputData.Clear();
+        ValidateLinks();
+        
         GetEquationTree(_defaultNode);
-        var initGuess = new List<float>();
-        float[] results= new float[SolverInputData.Count];
-        foreach (var item in SolverInputData)
+       _initGuess = new float[SolverInputData.Count];
+        var results= new float[SolverInputData.Count];
+        for (var i = 0; i < SolverInputData.Count; i++)
         {
-       
-            float value = item.ElementData.Param.Contains("h") ? 0 : 100;
-            initGuess.Add(value);// should be change with the Initial value of flowrate
+            var item = SolverInputData[i];
+            var value = item.ElementData.Param.Contains("h") ? 0 : _data.FlowRate;
+            _initGuess[i]=value;
+            results[i] = value + 1;
             _allEquations.Add(item.GetEquation(value));
             _allVariables.Add(item.ElementData.Param);
         }
 
-        while (!MPDUtility.CompareArrays(results, initGuess.ToArray(), 0.1f)){
-         
-            _nlSolver = new NlEquationSolver(_allVariables.ToArray(), _allEquations.ToArray(), initGuess.ToArray());
-            results= _nlSolver.Solve();
-            for (int i = 0; i < SolverInputData.Count; i++)
+        while (!MPDUtility.CompareArrays(results, _initGuess, 0.1f))
+        {
+            results = _initGuess;
+            _nlSolver = new NlEquationSolver(_allVariables.ToArray(), _allEquations.ToArray(), _initGuess);
+            _initGuess= _nlSolver.Solve();
+            for (var i = 0; i < SolverInputData.Count; i++)
             {   
-                _allEquations.Add(SolverInputData[i].GetEquation(results[i]));
-                _allVariables.Add(SolverInputData[i].ElementData.Param);
+                _allEquations[i]=SolverInputData[i].GetEquation(_initGuess[i]);
+                _allVariables[i]=SolverInputData[i].ElementData.Param;
             }
         }
-        foreach (var item in initGuess)
+        foreach (var t in SolverInputData)
         {
-            print(item);
+            print(t.ElementData.Param+"="+ t.ElementData.Value);
         }
-        
+
     }
    
     private void ValidateLinks()
@@ -151,7 +158,7 @@ public class NodalNetwork : MonoBehaviour
 
     void CompleteNetwork(Link lnk)
     {
-        var lastNode = new Node { ElementData = new CalculationParams { Param="h_out"} };
+        var lastNode = new Node { ElementData = new CalculationParams { Param="0"} };
         lnk.AddNode(lastNode);
     }
 
@@ -164,15 +171,13 @@ public static class MPDUtility
     public static bool CompareArrays(float[] arr1, float[] arr2, float epsilon)
     {
         if(arr1.Length!=arr2.Length)
-        return false;
+            return false;
 
         float total = 0;
-        for (int i = 0; i < arr1.Length; i++)
+        for (var i = 0; i < arr1.Length; i++)
         {
             total += Mathf.Abs(arr1[i] - arr2[i]);
         }
-        if (total < epsilon) return true;
-
-        return false;
+        return total < epsilon;
     }
 }

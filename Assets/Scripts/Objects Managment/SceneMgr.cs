@@ -8,14 +8,16 @@ public class SceneMgr : MonoBehaviour {
 	// Use this for initialization
 	public List<GameObject> MpdAssembly;
 	private List<GameObject> _selectedObjects;
-	private InspectorView _inspectorView;
     private ToolsManager _toolsManager;
     private NodalNetwork _nodalNetwork;
     private UiManager _uiManager;
     private CameraManager _cameraManager;
+
+    private MpdData _data;
     // initialization
-    void Awake ()
+    private void Awake ()
     {
+        _data= new MpdData();
         _toolsManager = FindObjectOfType<ToolsManager>();
         _nodalNetwork = FindObjectOfType<NodalNetwork>();
         _uiManager = FindObjectOfType<UiManager>();
@@ -24,22 +26,23 @@ public class SceneMgr : MonoBehaviour {
         _uiManager.AssembleBtnClicked += _uiManager_AssembleBtnClicked;
         _uiManager.UnAssembleBtnClicked += _uiManager_UnAssembleBtnClicked;
         _uiManager.CalculateBtnClicked += _uiManager_CalculateBtnClicked;
+       // _uiManager.ApplyBtnClicked += () => print(_data.FlowRate);
 		
 		_toolsManager.OnToolConnected += _toolsManager_OnToolConnected;
         _toolsManager.ClickedOnObject += SelectionHandler;
         
 	}
 
-    private void _uiManager_CalculateBtnClicked(object sender, System.EventArgs e)
+    private void _uiManager_CalculateBtnClicked()
     {
         _nodalNetwork.CalculateHeads();
     }
 
-    private void _uiManager_UnAssembleBtnClicked(object sender, System.EventArgs e)
+    private void _uiManager_UnAssembleBtnClicked()
     {
     }
 
-    private void _uiManager_AssembleBtnClicked(object sender, System.EventArgs e)
+    private void _uiManager_AssembleBtnClicked()
     {
         if (_selectedObjects.Count>1)
                 return;
@@ -56,8 +59,8 @@ public class SceneMgr : MonoBehaviour {
     {
         Dictionary<string, GameObject> prefabsList = _toolsManager.MpdPrefabDictionary;
 
-        _uiManager.Init(prefabsList);
-        _nodalNetwork.Init(_toolsManager.MpdToolsInAssembly);
+        _uiManager.Init(prefabsList, _data);
+        _nodalNetwork.Init(_toolsManager.MpdToolsInAssembly, _data);
     }
 
     // Events  
@@ -99,4 +102,21 @@ public class SceneMgr : MonoBehaviour {
         }
 
 	}
+}
+
+public class MpdData
+{
+    public string WellName;
+    public float MudWeight;
+    public float FlowRate;
+    public float Viscosity;
+
+    public MpdData()
+    {
+        WellName = "Default";
+        MudWeight = 0;
+        FlowRate = 0;
+        Viscosity = 0;
+    }
+
 }
